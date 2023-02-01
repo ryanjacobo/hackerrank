@@ -280,9 +280,10 @@ public class Challenges {
         return minCost;
     }
 
-    // Picking Numbers
+    // Picking Numbers - objective create a subarray with the most elements where each pair would have a difference of >2.
     public static int pickingNumbers(List<Integer> a) {
         Collections.sort(a);
+        System.out.println(a);
         List<Integer> count  = new ArrayList<>();
 
         // a.size()-1 means end the loop at second to last element to add the last element to the second to the last element
@@ -290,16 +291,39 @@ public class Challenges {
             List<Integer> temp = new LinkedList<>();
             temp.add(a.get(i));
             for(int j = i+1; j < a.size(); j++){
+                // if difference is >=2, add count temp size to count list
                 if (Math.abs(a.get(i)-a.get(j)) < 2){
                     temp.add(j);
                 }
 //                System.out.println(temp);
             }
             count.add(temp.size());
+            System.out.println(temp);
         }
         return Collections.max(count);
     }
 
+    // Picking Numbers 2
+    public static int pickingNumbers2(List<Integer> a){
+        Collections.sort(a);
+        System.out.println(a);
+        int count = 0;
+        int max = 0;
+        Collections.sort(a);
+        for(int i = 0; i<a.size(); i++){
+            for(int j = i; j<a.size(); j++){
+                if(Math.abs(a.get(i) - a.get(j)) <= 1){
+                    count++;
+                }
+            }
+            // Reset the count if the iteration goes over 1 and save it to the max variable.
+            if(count>max) {
+                max = count;
+            }
+            count=0;
+        }
+        return max;
+    }
     public static void main(String[] args) {
         System.out.println("#### Kangaroos ####");
         System.out.println(kangaroo(0, 2, 5, 3));
@@ -416,6 +440,6 @@ public class Challenges {
         List<Integer> numbers = new ArrayList<>();
         numbers.addAll(Arrays.asList(4, 6, 5, 3, 3, 1));
         System.out.println(numbers);
-        System.out.println(pickingNumbers(numbers));
+        System.out.println(pickingNumbers2(numbers));
     }
 }

@@ -1,0 +1,3 @@
+I just added this line using FileWriter. 
+This is line two.
+Last line.

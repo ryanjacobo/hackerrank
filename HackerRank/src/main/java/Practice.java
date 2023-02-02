@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Challenges {
+public class Practice {
 
     // Determine if to kangaroos will ever be in the same location give their starting location and velocity.
     public static String kangaroo(int x1, int v1, int x2, int v2) {
@@ -312,6 +312,7 @@ public class Challenges {
         Collections.sort(a);
         for(int i = 0; i<a.size(); i++){
             for(int j = i; j<a.size(); j++){
+                System.out.println(a.get(i) + " - " + a.get(j));
                 if(Math.abs(a.get(i) - a.get(j)) <= 1){
                     count++;
                 }
@@ -323,6 +324,31 @@ public class Challenges {
             count=0;
         }
         return max;
+    }
+
+    public static int hurdleRace(int k, List<Integer> height) {
+            int maxHurdle = Collections.max(height);
+            int reqBoost = maxHurdle - k;
+            if(k>=maxHurdle){
+                return 0;
+      } else {
+                return reqBoost;
+            }
+    }
+
+    public static int designerPdfViewer(List<Integer> h, String word) {
+        int max = -1; // will be used as comparison to h.get(val) which i
+        for(int i = 0; i<word.length();i++){
+//            int ascii = (int)word.charAt(i);
+            int letterIndex = word.charAt(i); // using "charAt(i) on a String is getting the ascii # of the letter
+            int val = letterIndex - 97; // "97" is the  ascii # of "a", deducting "97" makes it "0", "0" used for h.get(val) gives you the first element of h List.
+            System.out.println(letterIndex);
+            System.out.println(val);
+            if(h.get(val)>max){
+                max=h.get(val);
+            }
+        }
+        return word.length()*max;
     }
     public static void main(String[] args) {
         System.out.println("#### Kangaroos ####");
@@ -441,5 +467,18 @@ public class Challenges {
         numbers.addAll(Arrays.asList(4, 6, 5, 3, 3, 1));
         System.out.println(numbers);
         System.out.println(pickingNumbers2(numbers));
+
+        System.out.println("### The Hurdle Race ###");
+        List<Integer> height = new ArrayList<>();
+        height.addAll(Arrays.asList(2, 5, 4, 5, 2));
+        int k = 7;
+        System.out.println(hurdleRace(k, height));
+
+        System.out.println("### Designer PDF Viewer ###");
+        List<Integer> h = new ArrayList<>();
+        h.addAll(Arrays.asList(1, 3, 1, 3, 1, 4, 1, 3, 2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 7));
+        String word = "abc";
+        System.out.println(designerPdfViewer(h, word));
     }
+
 }

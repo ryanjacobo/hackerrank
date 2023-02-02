@@ -1,7 +1,6 @@
 import java.util.List;
-import java.util.Scanner;
 
-public class RevCodeChallenges {
+public class Revature {
     //Hunger Hub
     // Sampling and Combinations
 

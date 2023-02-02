@@ -1,5 +1,6 @@
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Quiz {
     int x = 1;
@@ -27,13 +28,30 @@ public class Quiz {
         return 10.3;
     }
 
-    private static void doSomething(int i){
-        if(0>i){
-            throw new IllegalArgumentException();
+//    private static void doSomething(int i){
+//        if(0>i){
+//            throw new IllegalArgumentException();
+//
+//        } else {
+//            // do something else
+//        }
+//    }
 
-        } else {
-            // do something else
+    private static boolean isPalindrome(String str){
+        System.out.println(str);
+        String word = "";
+
+        boolean ans = false;
+
+        for(int i = str.length() -1; i >= 0; i--){
+            word = word + str.charAt(i);
+            System.out.println(word);
         }
+
+        if(str.equals(word)){
+            ans = true;
+        }
+        return ans;
     }
     public static void main(String[] args) {
         int[] arr = new int[]{3,9,5,9,1,2};
@@ -82,12 +100,32 @@ public class Quiz {
             System.out.println("zab");
         }
 
-        doSomething(-1);
+//        doSomething(-1);
 
         String a = "Hello";
         String b = "World";
         a = a + b;
 //        a = new String("Hello");
         String c = "World";
+
+        // Palindrome
+//        String original, reverse = ""; // Objects of String class
+//        Scanner in = new Scanner(System.in);
+//        System.out.println("Enter a string/number to check if it is a palindrome");
+//        original = in.nextLine();
+//        int length = original.length();
+//        for ( int i = length - 1; i >= 0; i-- )
+//            reverse = reverse + original.charAt(i);
+//        if (original.equals(reverse))
+//            System.out.println("Entered string/number is a palindrome.");
+//        else
+//            System.out.println("Entered string/number isn't a palindrome.");
+
+        System.out.println("### Is Palindrome? ###");
+        String str = new String();
+        str = "qwerew";
+        System.out.println(isPalindrome(str));
+
+
     }
 }

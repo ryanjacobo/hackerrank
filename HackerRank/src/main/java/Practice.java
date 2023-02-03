@@ -1,3 +1,5 @@
+import org.w3c.dom.ls.LSOutput;
+
 import java.util.*;
 
 public class Practice {
@@ -112,32 +114,36 @@ public class Practice {
 
     // Divisible Sum Pairs
     public static int divisibleSumPairs(int n, int k, List<Integer> ar) {
-        int total = 0;
+        int modK = 0;
 
         for (int i = 0; i < n; i++) {
             for (int j = i + 1; j < n; j++) {
                 if ((ar.get(i) + ar.get(j)) % k == 0) {
-                    total++;
+                    modK++;
                 }
             }
         }
-        return total;
+        return modK;
     }
 
     // Migratory Birds
     public static int migratoryBirds(List<Integer> arr) {
         int max = 0;
-        int[] countArray = new int[3 << 1];
-        for (int val : arr) {
-            countArray[val]++;
-            max = Math.max(max, countArray[val]);
+        int[] countArray = new int[arr.size()];
+        Arrays.fill(countArray, 0); // determines how many times the same ID shows up
+
+        // loop through the arr
+        for (int id : arr) {
+          countArray[id] += 1; // increments the count of the index in the countArray
         }
+
         for (int i = 0; i < countArray.length; i++) {
-            if (countArray[i] == max) {
-                return i;
+            // compare count at given index with the max in the array
+            if (countArray[i] > countArray[max]) {
+                max = i;
             }
         }
-        return 0;
+   return max;
     }
 
     // Day of the programmer
@@ -350,6 +356,82 @@ public class Practice {
         }
         return word.length()*max;
     }
+
+    // Utopian Tree
+    public static int utopianTree(int n, int height) {
+//        int height = 2;
+
+        for(int i = 1; i <= n; i++){
+            if(i%2 == 1){
+                height*=2;
+            } else {
+                height++;
+            }
+            System.out.println("Cycle " + i + ": " + height);
+        }
+
+        return height;
+    }
+
+    public static String angryProfessor(int k, List<Integer> a) {
+        String cancel = "YES";
+        int attendance = 0;
+
+        for(int i = 0; i < a.size(); i++){
+            if(a.get(i) <= 0){
+                attendance++;
+            }
+        }
+        System.out.println("Attendance min: " + k);
+        System.out.println("Attendance: " + attendance);
+        if(attendance >= k){
+            return cancel = "NO";
+        } else {
+            cancel = "YES";
+        }
+        return cancel;
+    }
+
+    public static int reversed(int num){
+        int reversed = 0;
+        while(num != 0) {
+            int digit = num % 10;
+            reversed = reversed * 10 + digit;
+
+            num /= 10;
+        }
+        return reversed;
+    }
+    public static int beautifulDays(int i, int j, int k) {
+        int beautifulDays = 0;
+        int days = j - i;
+        for(int l = 0; l <= days; l++){
+            int day = i;
+            int rDay = day - reversed(day);
+            System.out.println(i);
+            System.out.println(rDay);
+            if(rDay%k == 0){
+                System.out.println(rDay);
+                beautifulDays++;
+            }
+            i+=1;
+        }
+//        System.out.println("Reversed: " + reversed(1234));
+//        System.out.println("Number of beautiful days: " + beautifulDays);
+        return beautifulDays;
+    }
+
+    public static int viralAdvertising(int n){
+        int shared = 5;
+        int cumulative = 0;
+
+        for(int i = 1; i <= n; i++ ){
+            int liked = (int)Math.floor(shared/2);
+            cumulative+=liked;
+            shared = liked*3;
+        }
+        return cumulative;
+    }
     public static void main(String[] args) {
         System.out.println("#### Kangaroos ####");
         System.out.println(kangaroo(0, 2, 5, 3));
@@ -396,6 +478,18 @@ public class Practice {
         System.out.println(b);
         System.out.println(getTotalX(a, b));
 
+        System.out.println("### Divisible Sum Pairs ###");
+        int k = 5;
+        int n = 6;
+        List<Integer> ar = new ArrayList<>();
+        ar.addAll(Arrays.asList(1,2,3,4,5,6));
+        System.out.println("Number of pairs divisible by k is: " + divisibleSumPairs(n, k,ar));
+
+        System.out.println("### Migratory Birds ###");
+        List<Integer> arr = new ArrayList<>();
+        arr.addAll(Arrays.asList(3,3,1,1,2,2,3));
+        System.out.println("Bird ID that's been spotted the most: " + migratoryBirds(arr));
+
         System.out.println("#### Day of programmer ####");
         System.out.println(dayOfProgrammer(2017));
         System.out.println(dayOfProgrammer(2018));
@@ -412,9 +506,9 @@ public class Practice {
         bonAppetit(foodID2, 1, 7);
 
         System.out.println("### Sales by Match ###");
-        List<Integer> ar = new LinkedList<>();
+        List<Integer> arx = new LinkedList<>();
         ar.addAll(Arrays.asList(1, 2, 1, 2, 1, 3, 2, 2));
-        System.out.println(sockMerchant(7, ar));
+        System.out.println(sockMerchant(7, arx));
 
         System.out.println("### Drawing Book ###");
         System.out.println(pageCount(5, 4));
@@ -471,14 +565,39 @@ public class Practice {
         System.out.println("### The Hurdle Race ###");
         List<Integer> height = new ArrayList<>();
         height.addAll(Arrays.asList(2, 5, 4, 5, 2));
-        int k = 7;
-        System.out.println(hurdleRace(k, height));
+        int kx = 7;
+        System.out.println(hurdleRace(kx, height));
 
         System.out.println("### Designer PDF Viewer ###");
         List<Integer> h = new ArrayList<>();
         h.addAll(Arrays.asList(1, 3, 1, 3, 1, 4, 1, 3, 2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 7));
         String word = "abc";
         System.out.println(designerPdfViewer(h, word));
+
+        System.out.println("### Utopian Tree ###");
+        int nx = 5;
+        int heightx = 2;
+        System.out.println(utopianTree(nx, heightx));
+
+        System.out.println("### Angry Professor ###");
+        int ky = 3;
+        List<Integer> ax = (Arrays.asList(-1, -3, 4, 2));
+        System.out.println("Cancel class: " + angryProfessor(ky , ax));
+
+        System.out.println("### Reversed number ####");
+        int numx = 1234;
+        System.out.println("Reverse of " + numx + " is " + reversed(numx));
+
+        System.out.println("#### Beautiful Days at the Movie ####");
+        int i = 20;
+        int j = 23;
+        int kz = 6;
+        System.out.println("Number of beautiful days: " + beautifulDays(i, j, kz));
+
+        System.out.println("### Viral Advertising ###");
+        int ny = 3;
+        System.out.println("Cummulative likes: " + viralAdvertising(ny));
     }
+
 
 }

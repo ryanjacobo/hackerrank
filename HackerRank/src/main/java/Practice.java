@@ -432,6 +432,77 @@ public class Practice {
         }
         return cumulative;
     }
+
+    public static int saveThePrisoner(int n, int m, int s){
+        //s-1 is to start the candy distribution to position 0
+        if((s-1+m) % n == 0)
+            return n;
+        else
+            return (s-1+m)%n;
+        //2-1+6 % 4 = 3
+    }
+
+    // Circular Array Rotation
+    public static void reverse(int[] a, int m, int n) {
+        // m = start element index
+        // n = last element index
+        while (m < n) {
+            int temp = a[m]; // store first element to a temp
+            a[m] = a[n]; // replace first element with last element
+            a[n] = temp; // replace last element with first element
+            ++m; // change to next index (to the right)
+            --n; // change to next index (to the left)
+        }
+        System.out.println("Reversed array: " + Arrays.toString(a));
+    }
+
+    public static void reverse2(int[] a){
+        Integer[] newA = Arrays.stream(a).boxed().toArray(Integer[]::new);
+        Collections.reverse(Arrays.asList(newA));
+        System.out.println("reverse2: " + Arrays.toString(newA));
+    }
+    public static int[] circularArrayRotation(int[] a, int k, int[] queries){
+        // a = initial array arrangement
+        // k = shift count
+        // queries = the new indices of the elements
+        k = k % a.length;
+        final int SIZE = a.length - 1;
+
+        reverse(a, 0, SIZE);
+//        reverse(a, 0, k-1);
+//        reverse(a, k, SIZE);
+
+        int[] arr = new int[queries.length]; // arr.length = queries.length
+        for(int i = 0; i < arr.length; ++i)
+            arr[i] = a[queries[i]];
+        return arr;
+    }
+
+    // Collections.reverse(<listName>) long method
+//    public static <T> void reverseList(List<T> list) {
+//       if(list.size() <=1 || list == null)
+//           return;
+//
+//       T value = list.remove(0);
+//
+//       reverseList(list);
+//        list.add(value);
+//    }
+    public static List<Integer> circularListRotation(List<Integer> a, int k, List<Integer> queries){
+//        public static List<Integer> circularListRotation(List<Integer> a, int k){
+
+        List<Integer> queriedList = new LinkedList<>();
+
+            Collections.rotate(a, k);
+//        System.out.println("Shifted List by " + k + ": " + a);
+            for(int i = 0; i < queries.size(); i++){
+//                System.out.println("Query index " + queries.get(i) + " of" + " list " + a);
+//                System.out.println("Index " + a.get(queries.get(i)) + " of" + a);
+                queriedList.add(a.get(queries.get(i))); // a.get(value of queries.get(i))
+            }
+            return queriedList;
+    }
+
     public static void main(String[] args) {
         System.out.println("#### Kangaroos ####");
         System.out.println(kangaroo(0, 2, 5, 3));
@@ -439,15 +510,7 @@ public class Practice {
 
         System.out.println("#### Breaking the records ####");
         List<Integer> scores = new ArrayList<>();
-        scores.add(10);
-        scores.add(5);
-        scores.add(20);
-        scores.add(20);
-        scores.add(4);
-        scores.add(5);
-        scores.add(2);
-        scores.add(25);
-        scores.add(1);
+        scores.addAll(Arrays.asList(10, 5, 20, 20, 4, 5, 2, 25, 1));
         List<Integer> scoresArr = breakingRecords(scores);
         int lowestCount = scoresArr.get(0);
         int highestCount = scoresArr.get(1);
@@ -597,7 +660,50 @@ public class Practice {
         System.out.println("### Viral Advertising ###");
         int ny = 3;
         System.out.println("Cummulative likes: " + viralAdvertising(ny));
+
+        System.out.println("### Save the Prisoner ###");
+        int numX = 4;
+        int candies = 6;
+        int sit = 1;
+
+        System.out.println("Lucky prisoner: " + saveThePrisoner(numX, candies, sit));
+
+        System.out.println("### Circular array rotation ###");
+        int[] az = new int[]{1,2,3, 4, 5}; // declaring/initializing an int[] (immutable)
+        Integer[] azInt = Arrays.stream(az).boxed().toArray(Integer[]::new);
+//        Integer[] az = {1,2,3,4,5}; // initializing a mutable Int array
+        System.out.println("Given int array: " + Arrays.toString(az));
+        int mx = 0;
+        int nu = 2;
+//        reverse(az, mx, nu);
+        Collections.reverse(Arrays.asList(azInt));
+        System.out.println("Reversed Int Array: " + Arrays.toString(azInt));
+
+
+        int[] aw = new int[]{6,7,8,9,10,11};
+        System.out.println("Given int array: " + Arrays.toString(aw));
+//        reverse2(aw);
+        int[] ay = new int[]{3,4,5, 6, 7, 8, 9, 10};
+        int m = 2; // number of shifts to the right
+        int[] nz = new int[]{0, 2, 4}; // length
+        System.out.println("Given array: " + Arrays.toString(ay));
+        System.out.println("Queried elements: " + Arrays.toString(circularArrayRotation(ay, m, nz)));
+
+        System.out.println("### Circular list rotation ###");
+
+        List<Integer> au = new ArrayList<>();
+        au.addAll(Arrays.asList(6,7,8,9,10,11,12));
+        System.out.println("Given List: " + au);
+
+//        Collections.reverse(au);
+//        System.out.println("Reversed List: " + au);
+
+//        Collections.rotate(au, 2);
+//        System.out.println("Shift list " + au + " by: " + 2);
+
+        List<Integer> queries = new ArrayList<>();
+        queries.addAll(Arrays.asList(0,2,6));
+        System.out.println("Queries: " + queries.toString());
+        System.out.println("Queried elements: " + circularListRotation(au, 2, queries));
     }
-
-
 }

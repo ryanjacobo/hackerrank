@@ -1,3 +1,8 @@
+import java.math.BigInteger;
+import java.sql.SQLOutput;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Revature {
@@ -42,7 +47,7 @@ public class Revature {
                 char cipherChar = alphabetInside.charAt(newIndex); // new char corresponding to original letter
 
                 if (Character.isUpperCase(c)) {
-                    encrypted += ((char) (((int) c + shift - 65) % 26 + 65)); // code that allows the char to keep the uppercase and be encrypted
+                    encrypted += ((char) (((int) c + shift - 65) % 26 + 65)); // code that allows the char to keep the uppercase and be encrypted, "65" is the ascii number of "A"
                 } else if (letterIndex == -1) {
                     encrypted += c;
                     continue;
@@ -72,6 +77,41 @@ public class Revature {
         return max;
     }
 
+    public static BigInteger fibonacci(int n) {
+        if(n==1 || n ==2)
+            return BigInteger.ONE;
+
+        return fibonacci(n-1).add(fibonacci(n-2));
+    }
+
+    public static BigInteger fibonacci2(int n) {
+        BigInteger total = BigInteger.valueOf(0);
+        return total;
+    }
+
+    public static int findCost(int N,int R,int X[],int Y[]){
+        int sumY = 0;
+        int totalTreeCost = 0;
+        int max = 0;
+        int result = 0;
+
+        for(int y: Y){
+            sumY+=y;
+        }
+        totalTreeCost = sumY + R;
+        System.out.println("totalTreeCost: " + totalTreeCost);
+
+        for(int y: Y){
+            if(y > max)
+                max = y;
+        }
+        System.out.println("max: " + max);
+        result = totalTreeCost - max;
+
+        return result ;
+    }
+
+
         public static void main (String[]args){
 //        System.out.println(birthdayChocolates(3, 7, 2));
 
@@ -95,5 +135,12 @@ public class Revature {
             int k = 1;
             System.out.println(caesarCipher(s, k));
             System.out.println(caesarCipher("middle-Outz", 2));
+
+            System.out.println("### Tree vertices ###");
+            int N = 4;
+            int R = 1;
+            int[] X = new int[]{1, 1, 1};
+            int[] Y = new int[]{2, 3, 4};
+            System.out.println("Cost: " + findCost(N, R, X, Y));
         }
     }

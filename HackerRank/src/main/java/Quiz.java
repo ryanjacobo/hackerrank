@@ -1,6 +1,6 @@
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Scanner;
+import com.sun.jdi.Value;
+
+import java.util.*;
 
 public class Quiz {
     int x = 1;
@@ -52,6 +52,23 @@ public class Quiz {
             ans = true;
         }
         return ans;
+    }
+
+    public static int getMaxPoint(int N, ArrayList<Integer> A){
+        Collections.sort(A);
+        System.out.println(A);
+        Set<Integer> freq = new HashSet<>(A);
+        List<Integer> pointsList = new ArrayList<>();
+        int totalPoints = 0;
+
+        for(Integer a: A){
+           pointsList.add(Collections.frequency(freq, a));
+        }
+
+        for(Integer p: pointsList){
+            totalPoints+=p;
+        }
+        return totalPoints;
     }
     public static void main(String[] args) {
         int[] arr = new int[]{3,9,5,9,1,2};
@@ -126,6 +143,12 @@ public class Quiz {
         str = "qwerew";
         System.out.println(isPalindrome(str));
 
+        System.out.println("### Max Points ###");
+        int Nx = 10;
+        List<Integer> A = Arrays.asList(1, 3,2,2,2,3,4,3,1);
+//        ArrayList<Integer> A = new ArrayList<>(ax);
 
+//        System.out.println("Total points: " + getMaxPoint(Nx, A));
+//        getMaxPoint(Nx, A);
     }
 }

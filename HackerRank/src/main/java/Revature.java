@@ -112,6 +112,40 @@ public class Revature {
     }
 
 
+    public static int MaxLength (int N, int[] A, int M, int[] B){
+
+        List<Integer> newA = new ArrayList<>();
+        List<Integer> newB = new ArrayList<>();
+
+        int maxLength;
+
+        for(int i = 0; i < N; i++) {
+            int aSum = 0;
+            for(int j = 0; j < N; j++){
+                aSum = A[i] + A[j];
+            }
+            System.out.println(aSum);
+            for(int k = 0; k < M; k++){
+                int bSum = 0;
+                for(int l = 0; l<M; l++){
+                    bSum = B[k] + B[l];
+                }
+                System.out.println(bSum);
+                if(aSum == bSum){
+                    newA.add(aSum);
+                    newB.add(bSum);
+                }
+            }
+        }
+        System.out.println(newA);
+        System.out.println(newB);
+        if(newA.size() == newB.size()){
+            maxLength = newA.size();
+        } else {
+            maxLength = -1;
+        }
+        return maxLength;
+    }
         public static void main (String[]args){
 //        System.out.println(birthdayChocolates(3, 7, 2));
 
@@ -142,5 +176,12 @@ public class Revature {
             int[] X = new int[]{1, 1, 1};
             int[] Y = new int[]{2, 3, 4};
             System.out.println("Cost: " + findCost(N, R, X, Y));
+
+            System.out.println("### Equal Subarray ###");
+            int Nx = 5;
+            int Ax[] = {11,2,3,5,7};
+            int M = 4;
+            int B[] = {11,7,3,7};
+            System.out.println(MaxLength (Nx, Ax, M, B));
         }
     }

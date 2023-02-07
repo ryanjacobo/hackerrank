@@ -21,7 +21,7 @@ public class Practice {
         return "NO";
     }
 
-    // Breaking the records
+    // Breaking the records - Return number of times highest and lowest scores have been beaten
     public static List<Integer> breakingRecords(List<Integer> scores) {
         int highest = 0;
         int lowest = 0;
@@ -68,51 +68,9 @@ public class Practice {
         return result;
     }
 
-    // Between two sets
-    // n1 is first element of the list, n2 is the next integer in the iteration of the list
-    public static int getLCM(int n1, int n2) {
-        if (n1 == 0 || n2 == 0)
-            return 0;
-        else {
-            int gcd = getGCD(n1, n2);
-            return Math.abs(n1 * n2) / gcd;
-        }
-    }
-
-    public static int getGCD(int n1, int n2) {
-        if (n2 == 0) {
-            return n1;
-        }
-//        System.out.println(getGCD(n2, n1 % n2));
-        return getGCD(n2, n1 % n2);
-    }
-
-    public static int getTotalX(List<Integer> a, List<Integer> b) {
-        int result = 0;
-        int lcm = a.get(0);
-        for (Integer integer : a) {
-            lcm = getLCM(lcm, integer);
-        }
-
-        int gcd = b.get(0);
-        for (Integer integer : b) {
-            gcd = getGCD(gcd, integer);
-        }
-
-        int multiple = 0;
-        while (multiple <= gcd) {
-            multiple += lcm;
 
 
-            if (gcd % multiple == 0)
-                result++;
-        }
-        System.out.println(result);
-
-        return result;
-    }
-
-    // Divisible Sum Pairs
+    // Divisible Sum Pairs - number of pairs in the List that are divisible by k
     public static int divisibleSumPairs(int n, int k, List<Integer> ar) {
         int modK = 0;
 
@@ -124,26 +82,6 @@ public class Practice {
             }
         }
         return modK;
-    }
-
-    // Migratory Birds
-    public static int migratoryBirds(List<Integer> arr) {
-        int max = 0;
-        int[] countArray = new int[arr.size()];
-        Arrays.fill(countArray, 0); // determines how many times the same ID shows up
-
-        // loop through the arr
-        for (int id : arr) {
-          countArray[id] += 1; // increments the count of the index in the countArray
-        }
-
-        for (int i = 0; i < countArray.length; i++) {
-            // compare count at given index with the max in the array
-            if (countArray[i] > countArray[max]) {
-                max = i;
-            }
-        }
-   return max;
     }
 
     // Day of the programmer
@@ -161,13 +99,12 @@ public class Practice {
 
         // Bill Division
     public static void bonAppetit(List<Integer> bill, int k, int b) {
-        bill.remove(k);
+        bill.remove(k); // remove the item with corresponding index(k)
         int sum = 0;
 
         for (int i = 0; i < bill.size(); i++) {
             sum += bill.get(i);
         }
-        ;
         int splitAmount = sum / 2;
         if (splitAmount == b) {
             System.out.println("Bon Appetit");
@@ -255,81 +192,6 @@ public class Practice {
             return "Mouse C";
         }
 
-    }
-
-    // Forming a Magic Square (Medium)
-    public static int formingMagicSquare(List<List<Integer>> s) {
-        int[][][] squares = {
-            {{8, 3, 4}, {1, 5, 9}, {6, 7, 2}},
-            {{4, 3, 8}, {9, 5, 1}, {2, 7, 6}},
-            {{8, 1, 6}, {3, 5, 7}, {4, 9, 2}},
-            {{6, 1, 8}, {7, 5, 3}, {2, 9, 4}},
-            {{2, 9, 4}, {7, 5, 3}, {6, 1, 8}},
-            {{4, 9, 2}, {3, 5, 7}, {8, 1, 6}},
-            {{2, 7, 6}, {9, 5, 1}, {4, 3, 8}},
-            {{6, 7, 2}, {1, 5, 9}, {8, 3, 4}}
-    };
-
-        int minCost = Integer.MAX_VALUE;
-        // squares.length = length of the parent array (8)
-        for (int i = 0; i < squares.length; i++) {
-            int total = 0;
-            // squares[i].length = length of the nested array (3)
-            for (int j = 0; j < squares[i].length; j++) {
-                // squares[k].length = length of the array (integers) inside the nested array (3)
-                for(int k = 0; k<squares[j].length; k++) {
-                    total += Math.abs(s.get(j).get(k) - squares[i][j][k]);
-                }
-            }
-            minCost = Math.min(minCost, total);
-        }
-        return minCost;
-    }
-
-    // Picking Numbers - objective create a subarray with the most elements where each pair would have a difference of >2.
-    public static int pickingNumbers(List<Integer> a) {
-        Collections.sort(a);
-        System.out.println(a);
-        List<Integer> count  = new ArrayList<>();
-
-        // a.size()-1 means end the loop at second to last element to add the last element to the second to the last element
-        for (int i = 0; i < a.size()-1; i++) {
-            List<Integer> temp = new LinkedList<>();
-            temp.add(a.get(i));
-            for(int j = i+1; j < a.size(); j++){
-                // if difference is >=2, add count temp size to count list
-                if (Math.abs(a.get(i)-a.get(j)) < 2){
-                    temp.add(j);
-                }
-//                System.out.println(temp);
-            }
-            count.add(temp.size());
-            System.out.println(temp);
-        }
-        return Collections.max(count);
-    }
-
-    // Picking Numbers 2
-    public static int pickingNumbers2(List<Integer> a){
-        Collections.sort(a);
-        System.out.println(a);
-        int count = 0;
-        int max = 0;
-        Collections.sort(a);
-        for(int i = 0; i<a.size(); i++){
-            for(int j = i; j<a.size(); j++){
-                System.out.println(a.get(i) + " - " + a.get(j));
-                if(Math.abs(a.get(i) - a.get(j)) <= 1){
-                    count++;
-                }
-            }
-            // Reset the count if the iteration goes over 1 and save it to the max variable.
-            if(count>max) {
-                max = count;
-            }
-            count=0;
-        }
-        return max;
     }
 
     public static int hurdleRace(int k, List<Integer> height) {
@@ -433,7 +295,11 @@ public class Practice {
         return cumulative;
     }
 
+    // return the element where the last candy has landed
     public static int saveThePrisoner(int n, int m, int s){
+        // n is the number of prisoners
+        // m is the number of candies
+        // s is the starting point of the distribution
         //s-1 is to start the candy distribution to position 0
         if((s-1+m) % n == 0)
             return n;
@@ -442,67 +308,64 @@ public class Practice {
         //2-1+6 % 4 = 3
     }
 
-    // Circular Array Rotation
-    public static void reverse(int[] a, int m, int n) {
-        // m = start element index
-        // n = last element index
-        while (m < n) {
-            int temp = a[m]; // store first element to a temp
-            a[m] = a[n]; // replace first element with last element
-            a[n] = temp; // replace last element with first element
-            ++m; // change to next index (to the right)
-            --n; // change to next index (to the left)
-        }
-        System.out.println("Reversed array: " + Arrays.toString(a));
-    }
+    public static int[] permutationEquationArray(int[] p){
+        int n = p.length;
+        int[]a = new int[n];
 
-    public static void reverse2(int[] a){
-        Integer[] newA = Arrays.stream(a).boxed().toArray(Integer[]::new);
-        Collections.reverse(Arrays.asList(newA));
-        System.out.println("reverse2: " + Arrays.toString(newA));
-    }
-    public static int[] circularArrayRotation(int[] a, int k, int[] queries){
-        // a = initial array arrangement
-        // k = shift count
-        // queries = the new indices of the elements
-        k = k % a.length;
-        final int SIZE = a.length - 1;
-
-        reverse(a, 0, SIZE);
-//        reverse(a, 0, k-1);
-//        reverse(a, k, SIZE);
-
-        int[] arr = new int[queries.length]; // arr.length = queries.length
-        for(int i = 0; i < arr.length; ++i)
-            arr[i] = a[queries[i]];
-        return arr;
-    }
-
-    // Collections.reverse(<listName>) long method
-//    public static <T> void reverseList(List<T> list) {
-//       if(list.size() <=1 || list == null)
-//           return;
-//
-//       T value = list.remove(0);
-//
-//       reverseList(list);
-//        list.add(value);
-//    }
-    public static List<Integer> circularListRotation(List<Integer> a, int k, List<Integer> queries){
-//        public static List<Integer> circularListRotation(List<Integer> a, int k){
-
-        List<Integer> queriedList = new LinkedList<>();
-
-            Collections.rotate(a, k);
-//        System.out.println("Shifted List by " + k + ": " + a);
-            for(int i = 0; i < queries.size(); i++){
-//                System.out.println("Query index " + queries.get(i) + " of" + " list " + a);
-//                System.out.println("Index " + a.get(queries.get(i)) + " of" + a);
-                queriedList.add(a.get(queries.get(i))); // a.get(value of queries.get(i))
+        for(int i = 1; i<=n; i++){
+            int index = 0;
+            for(int j = 0; j<n; j++){
+                if(p[j]==i){
+                    index = j + 1;
+                    break;
+                }
             }
-            return queriedList;
+
+            for(int j = 0; j<n; j++){
+                if(p[j]==index){
+                    index = j + 1;
+                    break;
+                }
+            }
+
+            a[i-1] = index;
+        }
+        System.out.println(Arrays.toString(a));
+
+        return a;
     }
 
+    public static List<Integer> permutationEquation(List<Integer> p) {
+        List<Integer> indices = new ArrayList<>();
+        int elNum = 1, xIndex = 0;
+        // x are the elements 1 - 5
+        while(elNum <= p.size()){
+
+            for(int i = 0; i <= p.size(); i++){
+                System.out.println("x: " + elNum + ", " + "i: " + i);
+                // find element 1 in the p list
+                if(elNum == p.get(i)){
+                    // find the element corresponding to the element's number(x) in the list
+                    for(int j = 0; j < p.size(); j++){
+                        int elVal = i+1;
+//                       find element equivalent
+                        if(elVal==p.get(j)){
+                            System.out.println("elVal: " + elVal);
+                            System.out.println("p.get(j): " + p.get(j));
+                            xIndex = j+1;
+                            System.out.println("xIndex " + xIndex);
+                            break;
+                        }
+                    }
+                    indices.add(xIndex);
+                    xIndex=0;
+                    elNum++; // proceed to element 2
+                    break;
+                }
+            }
+        }
+        return indices;
+    }
     public static void main(String[] args) {
         System.out.println("#### Kangaroos ####");
         System.out.println(kangaroo(0, 2, 5, 3));
@@ -527,31 +390,12 @@ public class Practice {
 
         System.out.println(birthday(s, 3, 2));
 
-        System.out.println("#### Between two Sets ####");
-        System.out.println(getLCM(2, 4));
-        System.out.println(getGCD(16, 96));
-        List<Integer> a = new LinkedList<>();
-        a.add(2);
-        a.add(4);
-        System.out.println(a);
-        List<Integer> b = new LinkedList<>();
-        b.add(16);
-        b.add(32);
-        b.add(96);
-        System.out.println(b);
-        System.out.println(getTotalX(a, b));
-
         System.out.println("### Divisible Sum Pairs ###");
         int k = 5;
         int n = 6;
         List<Integer> ar = new ArrayList<>();
         ar.addAll(Arrays.asList(1,2,3,4,5,6));
         System.out.println("Number of pairs divisible by k is: " + divisibleSumPairs(n, k,ar));
-
-        System.out.println("### Migratory Birds ###");
-        List<Integer> arr = new ArrayList<>();
-        arr.addAll(Arrays.asList(3,3,1,1,2,2,3));
-        System.out.println("Bird ID that's been spotted the most: " + migratoryBirds(arr));
 
         System.out.println("#### Day of programmer ####");
         System.out.println(dayOfProgrammer(2017));
@@ -597,34 +441,6 @@ public class Practice {
         int z = 3;
         System.out.println(catAndMouse(x, y, z));
 
-        System.out.println("### Forming a Magic Square ###");
-//        List<List<Integer>> input = List.of(
-//                List.of(8, 3, 4, 1, 5, 9, 6, 7, 2),
-//                List.of(4, 3, 8, 9, 5, 1, 2, 7, 6),
-//                List.of(8, 3, 4, 1, 5, 9, 6, 7, 2),
-//                List.of(4, 3, 8, 9, 5, 1, 2, 7, 6),
-//                List.of(8, 1, 6, 3, 5, 7, 4, 9, 2),
-//                List.of(6, 1, 8, 7, 5, 3, 2, 9, 4),
-//                List.of(2, 9, 4, 7, 5, 3, 6, 1, 8),
-//                List.of(4, 9, 2, 3, 5, 7, 8, 1, 6),
-//                List.of(2, 7, 6, 9, 5, 1, 4, 3, 8),
-//                List.of(6, 7, 2, 1, 5, 3, 8, 3, 4)
-//        );
-        List<List<Integer>> input = List.of(
-                List.of(5,3,4),
-                List.of(1,5,8),
-                List.of(6,4,2)
-        );
-        System.out.println(formingMagicSquare(input));
-
-        System.out.println("### Picking Numbers ####");
-//        List<Integer> numbers = List.of(4, 6, 5, 3, 3, 1);
-// List.of makes the List unmodifiable
-        List<Integer> numbers = new ArrayList<>();
-        numbers.addAll(Arrays.asList(4, 6, 5, 3, 3, 1));
-        System.out.println(numbers);
-        System.out.println(pickingNumbers2(numbers));
-
         System.out.println("### The Hurdle Race ###");
         List<Integer> height = new ArrayList<>();
         height.addAll(Arrays.asList(2, 5, 4, 5, 2));
@@ -668,42 +484,13 @@ public class Practice {
 
         System.out.println("Lucky prisoner: " + saveThePrisoner(numX, candies, sit));
 
-        System.out.println("### Circular array rotation ###");
-        int[] az = new int[]{1,2,3, 4, 5}; // declaring/initializing an int[] (immutable)
-        Integer[] azInt = Arrays.stream(az).boxed().toArray(Integer[]::new);
-//        Integer[] az = {1,2,3,4,5}; // initializing a mutable Int array
-        System.out.println("Given int array: " + Arrays.toString(az));
-        int mx = 0;
-        int nu = 2;
-//        reverse(az, mx, nu);
-        Collections.reverse(Arrays.asList(azInt));
-        System.out.println("Reversed Int Array: " + Arrays.toString(azInt));
+        System.out.println("### Sequence Equation ###");
+        List<Integer> N = new ArrayList<>();
+        N.addAll(Arrays.asList(5,2,1,3,4));
+        System.out.println(permutationEquation(N));
 
-
-        int[] aw = new int[]{6,7,8,9,10,11};
-        System.out.println("Given int array: " + Arrays.toString(aw));
-//        reverse2(aw);
-        int[] ay = new int[]{3,4,5, 6, 7, 8, 9, 10};
-        int m = 2; // number of shifts to the right
-        int[] nz = new int[]{0, 2, 4}; // length
-        System.out.println("Given array: " + Arrays.toString(ay));
-        System.out.println("Queried elements: " + Arrays.toString(circularArrayRotation(ay, m, nz)));
-
-        System.out.println("### Circular list rotation ###");
-
-        List<Integer> au = new ArrayList<>();
-        au.addAll(Arrays.asList(6,7,8,9,10,11,12));
-        System.out.println("Given List: " + au);
-
-//        Collections.reverse(au);
-//        System.out.println("Reversed List: " + au);
-
-//        Collections.rotate(au, 2);
-//        System.out.println("Shift list " + au + " by: " + 2);
-
-        List<Integer> queries = new ArrayList<>();
-        queries.addAll(Arrays.asList(0,2,6));
-        System.out.println("Queries: " + queries.toString());
-        System.out.println("Queried elements: " + circularListRotation(au, 2, queries));
+        int[] arr = {5,2,1,3,4};
+//        permutationEquationArray(arr);
     }
+
 }

@@ -171,6 +171,114 @@ public class Advanced {
         System.out.println("reverse2: " + Arrays.toString(newA));
     }
 
+    public static List<Integer> permutationEquation(List<Integer> p) {
+        List<Integer> indices = new ArrayList<>();
+        int elNum = 1, xIndex = 0;
+        // x are the elements 1 - 5
+        while(elNum <= p.size()){
+
+            for(int i = 0; i <= p.size(); i++){
+                System.out.println("x: " + elNum + ", " + "i: " + i);
+                // find element 1 in the p list
+                if(elNum == p.get(i)){
+                    // find the element corresponding to the element's number(x) in the list
+                    for(int j = 0; j < p.size(); j++){
+                        int elVal = i+1;
+//                       find element equivalent
+                        if(elVal==p.get(j)){
+                            System.out.println("elVal: " + elVal);
+                            System.out.println("p.get(j): " + p.get(j));
+                            xIndex = j+1;
+                            System.out.println("xIndex " + xIndex);
+                            break;
+                        }
+                    }
+                    indices.add(xIndex);
+                    xIndex=0;
+                    elNum++; // proceed to element 2
+                    break;
+                }
+            }
+        }
+        return indices;
+    }
+
+    // Designer PDF Viewer - return the area of the highlight
+    public static int designerPdfViewer(List<Integer> h, String word) {
+        int max = -1; // will be used as comparison to h.get(val) which i
+        for(int i = 0; i<word.length();i++){
+//            int ascii = (int)word.charAt(i);
+            int letterIndex = word.charAt(i); // using "charAt(i) on a String is getting the ascii # of the letter
+            int val = letterIndex - 97; // "97" is the  ascii # of "a", deducting "97" makes it "0", "0" used for h.get(val) gives you the first element of h List.
+            System.out.println(letterIndex);
+            System.out.println(val);
+            if(h.get(val)>max){
+                max=h.get(val);
+            }
+        }
+        return word.length()*max;
+    }
+
+    public static int jumpingOnClouds(int[] c, int k){
+        int energy = 100;
+        int cloud = 0;
+        int stops = 0;
+        System.out.println(Arrays.toString(c));
+
+        System.out.println("cloud = " + c.length);
+        System.out.println("k = " + k);
+
+        // will go through the loop at least once
+        do {
+            cloud += k;
+            System.out.println("cloud: " + cloud);
+
+            int temp = cloud;
+            // check whether or not jump has reached or overjumped that start
+//            energy = c[cloud] == 1 ? energy - 3 : energy - 1;
+            if(cloud >= c.length){
+                cloud = cloud % c.length; // resets cloud back to start
+                System.out.println(temp + " % " + c.length + " = " + cloud);
+            }
+
+            if(c[cloud] == 1){
+                energy -= 3;
+                stops++;
+                System.out.println("Stops: " + stops);
+                System.out.println("energy" + " - " + "3" + " = " + energy);
+            } else {
+                energy -= 1;
+                stops++;
+                System.out.println("Stops: " + stops);
+                System.out.println("energy" + " - " + "1" + " = " + energy);
+            }
+        }while(cloud != 0);
+        return energy;
+    }
+
+    // Cut the sticks
+    public static List<Integer> cutTheSticks(List<Integer> arr) {
+        List<Integer> sticks = (ArrayList)arr; // initialize sticks to the arr parameter
+        List<Integer> sizesList = new ArrayList<>();
+
+        Collections.sort(arr);
+
+        // loop to cut the sticks with min stick til list is 0
+        while(sticks.size() > 0){
+            sizesList.add(sticks.size()); // initial size will always be original size of the list; since all of them will be cut by the min sized stick
+            System.out.println("Initial sizes: " + sizesList);
+            System.out.println("sticks initial: " + sticks);
+            int min = Collections.min(sticks); // get the min size from the list
+            sticks.removeAll(Collections.singleton(min)); // removes the minimum values from the list
+            System.out.println("sticks min removed: " + sticks);
+            for(int i = 0; i<sticks.size(); i++){
+                // set takes in i and the new stick length (sticks.get(i)-min
+                sticks.set(i, sticks.get(i)-min);
+            }
+            // once all the sticks have been cut to min and removed, while-loop ends
+        }
+        return sizesList;
+    }
     public static void main(String[] args) {
         System.out.println("#### Between two Sets ####");
         List<Integer> a = new LinkedList<>();
@@ -240,5 +348,26 @@ public class Advanced {
         queries.addAll(Arrays.asList(0,2,6));
         System.out.println("Queries: " + queries.toString());
         System.out.println("Queried elements: " + circularListRotation(au, 2, queries));
+
+        System.out.println("### Sequence Equation ###");
+        List<Integer> N = new ArrayList<>();
+        N.addAll(Arrays.asList(5,2,1,3,4));
+        System.out.println(permutationEquation(N));
+
+        System.out.println("### Designer PDF Viewer ###");
+        List<Integer> h = new ArrayList<>();
+        h.addAll(Arrays.asList(1, 3, 1, 3, 1, 4, 1, 3, 2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 7));
+        String word = "abc";
+        System.out.println(designerPdfViewer(h, word));
+
+        System.out.println("### Jumping on Clouds ###");
+        int[] c = {1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1};
+        int kv = 18;
+        System.out.println(jumpingOnClouds(c, kv));
+
+        System.out.println("### Cut the sticks ###");
+        List<Integer> arrx = new ArrayList<>();
+        arrx.addAll(Arrays.asList(5, 4, 4, 2, 2, 8));
+        System.out.println("Sticks cut per iteration: " + cutTheSticks(arrx));
     }
 }

@@ -1,5 +1,6 @@
 import org.w3c.dom.ls.LSOutput;
 
+import java.math.BigInteger;
 import java.util.*;
 
 public class Practice {
@@ -69,7 +70,6 @@ public class Practice {
     }
 
 
-
     // Divisible Sum Pairs - number of pairs in the List that are divisible by k
     public static int divisibleSumPairs(int n, int k, List<Integer> ar) {
         int modK = 0;
@@ -97,7 +97,7 @@ public class Practice {
         return date;
     }
 
-        // Bill Division
+    // Bill Division
     public static void bonAppetit(List<Integer> bill, int k, int b) {
         bill.remove(k); // remove the item with corresponding index(k)
         int sum = 0;
@@ -195,37 +195,23 @@ public class Practice {
     }
 
     public static int hurdleRace(int k, List<Integer> height) {
-            int maxHurdle = Collections.max(height);
-            int reqBoost = maxHurdle - k;
-            if(k>=maxHurdle){
-                return 0;
-      } else {
-                return reqBoost;
-            }
+        int maxHurdle = Collections.max(height);
+        int reqBoost = maxHurdle - k;
+        if (k >= maxHurdle) {
+            return 0;
+        } else {
+            return reqBoost;
+        }
     }
 
-    public static int designerPdfViewer(List<Integer> h, String word) {
-        int max = -1; // will be used as comparison to h.get(val) which i
-        for(int i = 0; i<word.length();i++){
-//            int ascii = (int)word.charAt(i);
-            int letterIndex = word.charAt(i); // using "charAt(i) on a String is getting the ascii # of the letter
-            int val = letterIndex - 97; // "97" is the  ascii # of "a", deducting "97" makes it "0", "0" used for h.get(val) gives you the first element of h List.
-            System.out.println(letterIndex);
-            System.out.println(val);
-            if(h.get(val)>max){
-                max=h.get(val);
-            }
-        }
-        return word.length()*max;
-    }
 
     // Utopian Tree
     public static int utopianTree(int n, int height) {
 //        int height = 2;
 
-        for(int i = 1; i <= n; i++){
-            if(i%2 == 1){
-                height*=2;
+        for (int i = 1; i <= n; i++) {
+            if (i % 2 == 1) {
+                height *= 2;
             } else {
                 height++;
             }
@@ -239,14 +225,14 @@ public class Practice {
         String cancel = "YES";
         int attendance = 0;
 
-        for(int i = 0; i < a.size(); i++){
-            if(a.get(i) <= 0){
+        for (int i = 0; i < a.size(); i++) {
+            if (a.get(i) <= 0) {
                 attendance++;
             }
         }
         System.out.println("Attendance min: " + k);
         System.out.println("Attendance: " + attendance);
-        if(attendance >= k){
+        if (attendance >= k) {
             return cancel = "NO";
         } else {
             cancel = "YES";
@@ -254,9 +240,9 @@ public class Practice {
         return cancel;
     }
 
-    public static int reversed(int num){
+    public static int reversed(int num) {
         int reversed = 0;
-        while(num != 0) {
+        while (num != 0) {
             int digit = num % 10;
             reversed = reversed * 10 + digit;
 
@@ -264,107 +250,268 @@ public class Practice {
         }
         return reversed;
     }
+
     public static int beautifulDays(int i, int j, int k) {
         int beautifulDays = 0;
         int days = j - i;
-        for(int l = 0; l <= days; l++){
+        for (int l = 0; l <= days; l++) {
             int day = i;
             int rDay = day - reversed(day);
             System.out.println(i);
             System.out.println(rDay);
-            if(rDay%k == 0){
+            if (rDay % k == 0) {
                 System.out.println(rDay);
                 beautifulDays++;
             }
-            i+=1;
+            i += 1;
         }
 //        System.out.println("Reversed: " + reversed(1234));
 //        System.out.println("Number of beautiful days: " + beautifulDays);
         return beautifulDays;
     }
 
-    public static int viralAdvertising(int n){
+    public static int viralAdvertising(int n) {
         int shared = 5;
         int cumulative = 0;
 
-        for(int i = 1; i <= n; i++ ){
-            int liked = (int)Math.floor(shared/2);
-            cumulative+=liked;
-            shared = liked*3;
+        for (int i = 1; i <= n; i++) {
+            int liked = (int) Math.floor(shared / 2);
+            cumulative += liked;
+            shared = liked * 3;
         }
         return cumulative;
     }
 
     // return the element where the last candy has landed
-    public static int saveThePrisoner(int n, int m, int s){
+    public static int saveThePrisoner(int n, int m, int s) {
         // n is the number of prisoners
         // m is the number of candies
         // s is the starting point of the distribution
         //s-1 is to start the candy distribution to position 0
-        if((s-1+m) % n == 0)
+        if ((s - 1 + m) % n == 0)
             return n;
         else
-            return (s-1+m)%n;
+            return (s - 1 + m) % n;
         //2-1+6 % 4 = 3
     }
 
-    public static int[] permutationEquationArray(int[] p){
+    public static int[] permutationEquationArray(int[] p) {
         int n = p.length;
-        int[]a = new int[n];
+        int[] a = new int[n];
 
-        for(int i = 1; i<=n; i++){
+        for (int i = 1; i <= n; i++) {
             int index = 0;
-            for(int j = 0; j<n; j++){
-                if(p[j]==i){
+            for (int j = 0; j < n; j++) {
+                if (p[j] == i) {
                     index = j + 1;
                     break;
                 }
             }
 
-            for(int j = 0; j<n; j++){
-                if(p[j]==index){
+            for (int j = 0; j < n; j++) {
+                if (p[j] == index) {
                     index = j + 1;
                     break;
                 }
             }
 
-            a[i-1] = index;
+            a[i - 1] = index;
         }
         System.out.println(Arrays.toString(a));
 
         return a;
     }
 
-    public static List<Integer> permutationEquation(List<Integer> p) {
-        List<Integer> indices = new ArrayList<>();
-        int elNum = 1, xIndex = 0;
-        // x are the elements 1 - 5
-        while(elNum <= p.size()){
+    public static int findDigits(int n) {
+        int counter = 0;
+        int nCopy = n;
+        System.out.println("Example: " + "n = " + n);
+        while (n != 0) {
+            int rem = n % 10;
+            System.out.println(n + " % 10 " + " remainder: " + rem);
 
-            for(int i = 0; i <= p.size(); i++){
-                System.out.println("x: " + elNum + ", " + "i: " + i);
-                // find element 1 in the p list
-                if(elNum == p.get(i)){
-                    // find the element corresponding to the element's number(x) in the list
-                    for(int j = 0; j < p.size(); j++){
-                        int elVal = i+1;
-//                       find element equivalent
-                        if(elVal==p.get(j)){
-                            System.out.println("elVal: " + elVal);
-                            System.out.println("p.get(j): " + p.get(j));
-                            xIndex = j+1;
-                            System.out.println("xIndex " + xIndex);
-                            break;
-                        }
-                    }
-                    indices.add(xIndex);
-                    xIndex=0;
-                    elNum++; // proceed to element 2
-                    break;
-                }
+            if (rem > 0 && nCopy % rem == 0) {
+                counter++;
+                System.out.println("counter: " + counter);
+            }
+            n = n / 10;
+            System.out.println("running " + n);
+        }
+        return counter;
+
+        // Convert digits to a separate int and divide the n with each digit
+//        return (int)Integer.toString(n).chars().map(Character::getNumericValue).filter(num -> num > 0 && n % num == 0).count();
+    }
+
+    // Factorial
+    public static void extraLongFactorials(int n) {
+        BigInteger factorial = BigInteger.ONE;
+
+        // comparing to 2 or 1 results in the same final value
+        for (int counter = n; counter >= 1; counter--) {
+            factorial = factorial.multiply(BigInteger.valueOf(counter));
+        }
+        System.out.println(factorial);
+        System.out.printf("%d! = %d\n", n, factorial);
+    }
+
+
+    // Append and Delete String
+    public static String appendAndDelete(String s, String t, int k) {
+        int sIndex = 0;
+        int tIndex = 0;
+
+        while (sIndex < s.length() && tIndex < t.length()) {
+            if (s.charAt(sIndex) == t.charAt(tIndex)) {
+                sIndex++;
+                tIndex++;
+            } else {
+                break;
             }
         }
-        return indices;
+
+        int minMoves = 0;
+        minMoves = s.length() - sIndex + t.length() - tIndex;
+        if (k < minMoves) return "No";
+
+        if (k >= s.length() + t.length()) return "Yes";
+
+        if ((k - minMoves) % 2 == 0) return "Yes";
+
+        return "No";
+    }
+
+    public static int jumpingOnClouds(int[] c, int k) {
+        int energy = 100;
+        int cloud = 0;
+        int stops = 0;
+        System.out.println(Arrays.toString(c));
+
+        System.out.println("cloud = " + c.length);
+        System.out.println("k = " + k);
+
+//        for(int i = 0; i < c.length;){
+//            i = (i + k)%c.length;
+//            System.out.println(i);
+//            energy--;
+//            if(c[i] == 1){
+//                energy-=2;
+//            }
+//            else if(i == 0){
+//                break;
+//            }
+//        }
+
+        // will go through the loop at least once
+        do {
+            cloud += k;
+            System.out.println("cloud: " + cloud);
+//            System.out.println("cloud: " + c[cloud]);
+
+            int temp = cloud;
+            // check whether or not jump has reached or overjumped that start
+            if (cloud >= c.length) {
+                cloud = cloud % c.length; // resets cloud back to start
+                System.out.println(temp + " % " + c.length + " = " + cloud);
+            }
+
+//            energy = c[cloud] == 1 ? energy - 3 : energy - 1;
+            if (c[cloud] == 1) {
+//                System.out.println("-3");
+                energy -= 3;
+                stops++;
+                System.out.println("Stops: " + stops);
+                System.out.println("energy" + " - " + "3" + " = " + energy);
+            } else {
+//                System.out.println("-3");
+                energy -= 1;
+                stops++;
+                System.out.println("Stops: " + stops);
+                System.out.println("energy" + " - " + "1" + " = " + energy);
+            }
+        } while (cloud != 0);
+        return energy;
+    }
+
+    public static int squares(int a, int b) {
+        int squares = 0;
+        System.out.println("a: " + a);
+        System.out.println("b: " + b);
+
+//        System.out.println("First d: " + Math.sqrt(a));
+
+        long d = (long) Math.ceil(Math.sqrt(Double.valueOf(a))); // gets the sqrt of the number before the actual sqrt-able number then rounds it to the ceil int, "long" makes it capable to big numbers
+//        long d = (long)(Math.sqrt(Double.valueOf(a)));
+//        int d = (int)Math.ceil(Math.sqrt(Double.valueOf(a))); // fails by timeout, can't support long integers
+        while (d * d <= b) {
+//            System.out.println(d); // slows down the processing
+            squares++;
+            d++;
+        }
+        return squares;
+    }
+
+    public static int libraryFine(int d1, int m1, int y1, int d2, int m2, int y2) {
+        int fine = 0;
+        if (y2 > y1)
+            fine = (y2 - y1) * 10000;
+        else if (y2 == y1) {
+            if (m2 == m1 && d2 > d1)
+                fine = (d2 - d1) * 15;
+            else if (m2 > m1)
+                fine = (m2 - m1) * 500;
+        }
+        return fine;
+    }
+
+    public static int minStick(List<Integer> sticks){
+        int min = Collections.min(sticks);
+        return min;
+    }
+
+    // Jumping on clouds 2
+    public static int jumpingOnClouds2(List<Integer> c){
+        int cloud = 0;
+        int jumps = 0;
+
+        while(cloud < c.size() - 1){
+            if(cloud + 2 == c.size() || c.get(cloud + 2) == 1 ){
+                    // should always test first for cloud not going passed last index
+                    // take only 1 jump if 2 jumps would equal to the arr.size() since that would go over the index border OR if taking 2 jumps would land on a thundercloud(1)
+                cloud++;
+            } else {
+                // else always take 2 jumps
+                cloud += 2;
+            }
+            jumps++;
+        }
+        return jumps;
+    }
+
+    // Equalize array
+    public static int equalizeArray(List<Integer> arr) {
+        // Write your code here
+        int max = 0;
+        Map<Integer, Integer> map = new HashMap<>();
+        System.out.println("List: " + arr);
+        for (int n : arr) {
+            if (map.get(n) == null)
+            {
+                // if element value == 0
+                map.put(n, 1);
+                System.out.println("null: " + map.get(n));
+            }
+            else {
+                map.put(n, map.get(n)+1);
+                System.out.println("n: " + n);
+            }
+//            map.put(n, map.get(n)+1);
+//            System.out.println("n: " + n);
+            if (map.get(n) > max) {
+                max = map.get(n);
+            }
+        }
+        return arr.size() - max;
     }
     public static void main(String[] args) {
         System.out.println("#### Kangaroos ####");
@@ -394,8 +541,8 @@ public class Practice {
         int k = 5;
         int n = 6;
         List<Integer> ar = new ArrayList<>();
-        ar.addAll(Arrays.asList(1,2,3,4,5,6));
-        System.out.println("Number of pairs divisible by k is: " + divisibleSumPairs(n, k,ar));
+        ar.addAll(Arrays.asList(1, 2, 3, 4, 5, 6));
+        System.out.println("Number of pairs divisible by k is: " + divisibleSumPairs(n, k, ar));
 
         System.out.println("#### Day of programmer ####");
         System.out.println(dayOfProgrammer(2017));
@@ -447,12 +594,6 @@ public class Practice {
         int kx = 7;
         System.out.println(hurdleRace(kx, height));
 
-        System.out.println("### Designer PDF Viewer ###");
-        List<Integer> h = new ArrayList<>();
-        h.addAll(Arrays.asList(1, 3, 1, 3, 1, 4, 1, 3, 2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 7));
-        String word = "abc";
-        System.out.println(designerPdfViewer(h, word));
-
         System.out.println("### Utopian Tree ###");
         int nx = 5;
         int heightx = 2;
@@ -461,7 +602,7 @@ public class Practice {
         System.out.println("### Angry Professor ###");
         int ky = 3;
         List<Integer> ax = (Arrays.asList(-1, -3, 4, 2));
-        System.out.println("Cancel class: " + angryProfessor(ky , ax));
+        System.out.println("Cancel class: " + angryProfessor(ky, ax));
 
         System.out.println("### Reversed number ####");
         int numx = 1234;
@@ -484,13 +625,58 @@ public class Practice {
 
         System.out.println("Lucky prisoner: " + saveThePrisoner(numX, candies, sit));
 
-        System.out.println("### Sequence Equation ###");
-        List<Integer> N = new ArrayList<>();
-        N.addAll(Arrays.asList(5,2,1,3,4));
-        System.out.println(permutationEquation(N));
-
-        int[] arr = {5,2,1,3,4};
+        System.out.println("### Sequence Equation (array)###");
+        int[] arr = {5, 2, 1, 3, 4};
 //        permutationEquationArray(arr);
-    }
 
+        System.out.println("### Find Digits ###");
+        int nu = 1012;
+        System.out.println("Divisors of " + nu + " are: " + findDigits(nu));
+
+        System.out.println("### Factorial ###");
+        int nv = 1;
+        System.out.print("Factorial of " + nv + " is ");
+        extraLongFactorials(nv);
+
+        System.out.println("### Delete and Append ###");
+        String su = "aba";
+        String t = "aba";
+        int ku = 7;
+        System.out.println(appendAndDelete(su, t, ku));
+
+        System.out.println("### Jumping on Clouds ###");
+        int[] c = {1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1};
+        int kv = 18;
+        System.out.println(jumpingOnClouds(c, kv));
+
+        System.out.println("### Squares ###");
+        int a = 24;
+        int b = 49;
+        System.out.println(squares(a, b));
+
+        System.out.println("### Library Fine ###");
+        int d1 = 2;
+        int m1 = 5;
+        int y1 = 2015;
+        int d2 = 30;
+        int m2 = 5;
+        int y2 = 2015;
+        System.out.println("Fine: " + libraryFine(d1, m1, y1, d2, m2, y2));
+
+        System.out.println("### Cut the sticks ###");
+        List<Integer> stickArr = new ArrayList<>();
+        stickArr.addAll(Arrays.asList(5, 4, 4, 2, 2, 8));
+        System.out.println("Min stick: " + minStick(stickArr));
+
+        System.out.println("### Jumping on clouds 2 ###");
+        List<Integer> cu = new ArrayList<>();
+        cu.addAll(Arrays.asList(0,0,0,1,0,0));
+        System.out.println("Minimum jumps: " + jumpingOnClouds2(cu));
+
+        System.out.println("### Equalize Array ###");
+        List<Integer> arrx = new ArrayList<>();
+        arrx.addAll(Arrays.asList(1,2,3,1,2,3,3,3));
+//        arrx.addAll(Arrays.asList(0));
+        System.out.println("Elements removed: " + equalizeArray(arrx));
+    }
 }

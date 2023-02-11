@@ -37,13 +37,14 @@ public class Quiz {
 //        }
 //    }
 
+    // String Palindrome
     private static boolean isPalindrome(String str){
         System.out.println(str);
         String word = "";
 
         boolean ans = false;
 
-        for(int i = str.length() -1; i >= 0; i--){
+        for(int i = str.length() - 1; i >= 0; i--){
             word = word + str.charAt(i);
             System.out.println(word);
         }
@@ -53,6 +54,7 @@ public class Quiz {
         }
         return ans;
     }
+
 
     public static int getMaxPoint(int N, ArrayList<Integer> A){
         Collections.sort(A);
@@ -70,6 +72,101 @@ public class Quiz {
         }
         return totalPoints;
     }
+
+    public static String solution(String OldCode){
+        String result = new String(OldCode);
+
+        return result;
+    }
+
+    public static int neutralizer(int acid){
+        int nz = acid - 1;
+        int combo = 0;
+        int i = acid*(acid-1);
+        return i;
+    }
+
+    public static int maxLength(String[] str) {
+        int counter = 0;
+
+        return counter;
+    }
+
+    public static int neonLights(String str){
+        int counter = 0;
+
+        for(int i = 0; i < str.length(); i++){
+            char digit = str.charAt(i);
+            if(digit == '1'){
+                counter+=2;
+            }
+            else if(digit == '2'){
+                counter+=5;
+            }
+            else if(digit == '3'){
+                counter+=5;
+            }
+            else if(digit == '4'){
+                counter+=4;
+            }
+            else if(digit == '5'){
+                counter+=5;
+            }
+            else if(digit == '6'){
+                counter+=6;
+            }
+            else if(digit == '7'){
+                counter+=4;
+            }
+            else if(digit == '8'){
+                counter+=7;
+            }
+            else if(digit == '9'){
+                counter+=6;
+            }
+            else if(digit == '0'){
+                counter+=6;
+            }
+        }
+
+        return counter;
+    }
+
+//    public static int matrix(int[][] bits){
+//        int counter = 0;
+//
+//       for(int i = 0; i<4; i++){
+//           if(bits[i] == 1){
+//               for(int j = i+1; i<3; j++){
+//                   if(bits.get(i) == bits.get(j)){
+//                       horizontal++;
+//                       break;
+//                   }
+//               }
+//           }
+//           counter++;
+//       }
+//
+//        return counter;
+//    }
+
+//    public static int speedOptions(int maxSpeed){
+//        int counter = 0;
+//
+//        for(int i = 0; )
+//        return counter;
+//    }
+
+//    public static int teams(int person){
+//        int pairs = 0;
+//        if(person%2==0){
+//            for(int i = person; i  person; i++){
+//                pairs = i
+//            }
+//            return pairs;
+//        }
+//        return pairs;
+//    }
     public static void main(String[] args) {
         int[] arr = new int[]{3,9,5,9,1,2};
         System.out.println(arr[2]);
@@ -150,5 +247,20 @@ public class Quiz {
 
 //        System.out.println("Total points: " + getMaxPoint(Nx, A));
 //        getMaxPoint(Nx, A);
+
+        System.out.println("### Acid - Neutralizer ###");
+        int acid = 4;
+        System.out.println("Acid-Neutralizer combo: " + neutralizer(acid));
+
+        System.out.println("### Max sub-string length ###");
+        String[] strx = {"asam", "asrdr", "rdras"};
+        maxLength(strx);
+
+        System.out.println("### Neon lights ####");
+        String stry = "12134";
+        System.out.println("Number of lights: " + neonLights(stry));
+
+        int ax = 4;
+        System.out.println(ax<4?"a is greater than 4" : "a is less than 4");
     }
 }

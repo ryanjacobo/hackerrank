@@ -146,6 +146,22 @@ public class Revature {
         }
         return maxLength;
     }
+    public static void reverse(char[] a){
+        int halfSize = a.length/2;
+        char letter;
+
+        for(int i = 0; i < halfSize; i++){
+            letter = a[i];
+            a[i] = a[ halfSize - i -1];
+            a[halfSize - i -1] = letter;
+        }
+    }
+    public static String lexicographyDecreasing(String s) {
+        char[] sArr = s.toCharArray();
+        Arrays.sort(sArr);
+        String sStr = new String(sArr);
+        return sStr;
+    }
         public static void main (String[]args){
 //        System.out.println(birthdayChocolates(3, 7, 2));
 
@@ -183,5 +199,9 @@ public class Revature {
             int M = 4;
             int B[] = {11,7,3,7};
             System.out.println(MaxLength (Nx, Ax, M, B));
+
+            System.out.println("### Sort String char alphabetically ###");
+            String su = "oklahoma";
+            System.out.println(lexicographyDecreasing(su));
         }
     }

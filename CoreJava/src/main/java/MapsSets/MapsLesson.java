@@ -15,9 +15,8 @@ public class MapsLesson {
         hashMap.put(3, "Three");
 
         hashMap.put(5, "Lima"); // replaces initial keySet() 5
-
-        String text = hashMap.get(5); // Maps out the Integer parameter
-        System.out.println(text);
+        String newFive = hashMap.get(5); // Maps out the Integer parameter
+        System.out.println(newFive);
 
         // HashMap arranges the key:value by key number (most of the time)
         System.out.println("###HashMap###");
@@ -30,7 +29,6 @@ public class MapsLesson {
         // "value" = second parameter of the newMap
         for(Integer key: hashMap.keySet()){
             String value = hashMap.get(key);
-
             System.out.println(key + ": " + value);
         }
 
@@ -46,6 +44,14 @@ public class MapsLesson {
 
         System.out.println("###TreeMap###");
         createMap(treeMap);
+
+        HashMap happy = new HashMap();
+        happy.put("a", 10);
+        happy.put("b", 3);
+        happy.put("c", 88);
+
+        System.out.println("HashMap: " + happy);
+        System.out.println(happy.get("a"));
     }
 
     public static void createMap (Map<Integer, String> newMap) {

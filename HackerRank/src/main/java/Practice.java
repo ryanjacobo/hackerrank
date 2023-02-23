@@ -495,25 +495,42 @@ public class Practice {
         Map<Integer, Integer> map = new HashMap<>();
         System.out.println("List: " + arr);
         for (int n : arr) {
-            if (map.get(n) == null)
+
+            System.out.println("n: " + n);
+            System.out.println("element null ?: " + (map.get(n) == null ? true : false));
+            if (map.get(n) == null) // if element is unique
             {
-                // if element value == 0
-                map.put(n, 1);
-                System.out.println("null: " + map.get(n));
+                map.put(n, 1); // initialize the element for the first
+                System.out.println("add: " + map.get(n));
             }
             else {
                 map.put(n, map.get(n)+1);
-                System.out.println("n: " + n);
+                System.out.println("add: " + map.get(n));
             }
-//            map.put(n, map.get(n)+1);
-//            System.out.println("n: " + n);
+
             if (map.get(n) > max) {
                 max = map.get(n);
             }
         }
+        System.out.println("arr: " + arr);
         return arr.size() - max;
     }
-    public static void main(String[] args) {
+
+//    public static int equalizeArray(List<Integer> arr) {
+//        final int UPPER_LIMIT = 100;
+//        int[] intArray = new int[100];
+//        int maxCount = 0, lengthOfList = arr.size();
+//        for(int element: arr) {
+//            intArray[element - 1] += 1;
+//        }
+//        for(int i = 0; i < UPPER_LIMIT; i++){
+//            if(intArray[i] > maxCount)
+//                maxCount = intArray[i];
+//        }
+//        return lengthOfList - maxCount;
+//    }
+
+        public static void main(String[] args) {
         System.out.println("#### Kangaroos ####");
         System.out.println(kangaroo(0, 2, 5, 3));
         System.out.println(kangaroo(2, 3, 1, 4));
@@ -675,8 +692,8 @@ public class Practice {
 
         System.out.println("### Equalize Array ###");
         List<Integer> arrx = new ArrayList<>();
-        arrx.addAll(Arrays.asList(1,2,3,1,2,3,3,3));
-//        arrx.addAll(Arrays.asList(0));
+//        arrx.addAll(Arrays.asList(1,2,3,1,2,3,3,3,4,4));
+        arrx.addAll(Arrays.asList(96, 96, 45, 52, 73, 44, 51, 96));
         System.out.println("Elements removed: " + equalizeArray(arrx));
     }
 }

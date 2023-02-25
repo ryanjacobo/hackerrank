@@ -71,18 +71,58 @@ public class MustDoLeetcodes {
     }
 
     public static List<List<String>> groupAnagrams(String[] strs) {
+        System.out.println(Arrays.toString(strs));
+
         Map<String, List<String>> groupedAnagrams = new HashMap<>();
 
+        /*
+        1. Convert String element to a char[].
+        2. Sort the char[].
+        3. Store the sorted char[] to a String variable.
+        4. Put the String (in the variable) in the map if String is not already in the map.
+        5. Determine whether or not str is already in the key of map
+        6. Return the values of the groupedAnagrams.
+         */
+
         for(String str: strs){
-            char[] charArr = str.toCharArray();
-            Arrays.sort(charArr);
-            String sortedStr = String.valueOf(charArr);
+            char[] charArr = str.toCharArray(); // convert the String element to a char[] i.e. str[0] = [e,a,t]
+            System.out.println("charArr: " + Arrays.toString(charArr));
+            Arrays.sort(charArr); // sort the letters of charArr
+            String sortedStr = String.valueOf(charArr);  // charArr sorted
+            System.out.println("sortedStr: " + sortedStr);
             if(!groupedAnagrams.containsKey(sortedStr)){
                 groupedAnagrams.put(sortedStr, new ArrayList<>());
             }
-            groupedAnagrams.get(sortedStr).add(str);
+            System.out.println("add(str): " + groupedAnagrams.get(sortedStr).add(str));
+            System.out.println("get(sortedStr): " + groupedAnagrams.get(sortedStr));
         }
         return new ArrayList<>(groupedAnagrams.values());
+    }
+
+    public static int[] topKFrequent(int[] nums, int k){
+        // key = element, value = element frequency
+        Map<Integer, Integer> numFreq = new HashMap<>();
+
+        for(int num : nums){
+            numFreq.put(num, numFreq.getOrDefault(num, 0) + 1);
+        }
+
+        // define min heap with size k
+        Queue<Integer> minHeap = new PriorityQueue<>((a,b) -> numFreq.get(a) - numFreq.get(b));
+
+        // top k frequent element
+        for(int num: numFreq.keySet()){
+            minHeap.add(num);
+            if(minHeap.size() > k){
+                minHeap.poll();
+            }
+        }
+        int[] res = new int[minHeap.size()];
+        int index = 0;
+        while(minHeap.isEmpty() == false){
+            res[index++] = minHeap.poll();
+        }
+        return res;
     }
     public static void main(String[] args) {
         System.out.println("-----Contains Duplicate-----");
@@ -104,7 +144,13 @@ public class MustDoLeetcodes {
         System.out.println("Two sums 2: " + Arrays.toString(twoSum2(numsx, target)));
 
         System.out.println("-----Group Anagrams-----");
-        String[] strs = {"eat","tea","tan","ate","nat","bat"};
+        String[] strs = {"eat","tea","tan","ate","nat","bat", "eta"};
         System.out.println("Anagrams: " + groupAnagrams(strs));
+
+        System.out.println("-----Top K Frequent Elements-----");
+        int[] numsY = {1,1,1,2,2,3};
+        int k = 2;
+        System.out.println("Top " + k + " frequent numbers: " + Arrays.toString(topKFrequent(numsY, k)));
+
     }
 }

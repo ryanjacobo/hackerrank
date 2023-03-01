@@ -100,29 +100,71 @@ public class MustDoLeetcodes {
     }
 
     public static int[] topKFrequent(int[] nums, int k){
+        System.out.println("nums: " + Arrays.toString(nums));
         // key = element, value = element frequency
         Map<Integer, Integer> numFreq = new HashMap<>();
+        // priority queue to sort the values according to max value (occurences)
+        Queue<Integer> pq = new PriorityQueue<>((a,b)->Integer.compare(numFreq.get(a), numFreq.get(b)));
 
+        // put all elements in the Map with their corresponding value(count)
         for(int num : nums){
-            numFreq.put(num, numFreq.getOrDefault(num, 0) + 1);
+            System.out.println("num: " + num);
+            numFreq.put(num, numFreq.getOrDefault(num, 0) + 1); // getOrDefault gets the value of the key (if not already in the map) and adds 1 to the value at every reoccurance.
         }
+        System.out.println("numFreq sorted by num: " + numFreq); // show key=value of each num
 
-        // define min heap with size k
-        Queue<Integer> minHeap = new PriorityQueue<>((a,b) -> numFreq.get(a) - numFreq.get(b));
-
-        // top k frequent element
+        // add all numFreq keys to pq
         for(int num: numFreq.keySet()){
-            minHeap.add(num);
-            if(minHeap.size() > k){
-                minHeap.poll();
+            pq.add(num);
+
+            // top k frequent element
+            if(pq.size() > k){
+                System.out.println("pq: " + pq);
+                System.out.println("pq.size(): " + pq.size());
+                System.out.println("remove element: " + pq.poll());
             }
         }
-        int[] res = new int[minHeap.size()];
-        int index = 0;
-        while(minHeap.isEmpty() == false){
-            res[index++] = minHeap.poll();
-        }
+        System.out.println("pq: " + pq); // answer obtained in Queue<Integer> type
+
+        // convert Queue<Integer> to int[]
+        int[] res = pq.stream().mapToInt(Integer::intValue).toArray();
         return res;
+
+//        int[] res = new int[pq.size()];
+//        int index = 0;
+//        while(pq.isEmpty() == false){
+//            res[index++] = pq.poll();
+//        }
+//        return res;
+    }
+
+    public static int[] productExceptSelf(int[] nums){
+        // return an int[] that gets the product of all the other elements except the element in the current index
+        System.out.println("nums: "+ Arrays.toString(nums));
+      int arrLength = nums.length;
+      int[] leftProduct = new int[arrLength];
+      int[] rightProduct = new int[arrLength];
+      int[] outputArr = new int[arrLength];
+
+      leftProduct[0] = 1;
+      rightProduct[arrLength-1] = 1;
+
+
+      for(int i=1; i<arrLength; i++){
+          leftProduct[i] = nums[i-1] * leftProduct[i-1];
+      }
+      System.out.println("leftProduct: " + Arrays.toString(leftProduct));
+
+      for(int i=arrLength-2; i>=0; i--){
+          rightProduct[i] = nums[i+1] * rightProduct[i+1];
+      }
+      System.out.println("rightProduct: "+ Arrays.toString(rightProduct));
+
+      for(int i = 0; i<arrLength;i++){
+          outputArr[i]=leftProduct[i]*rightProduct[i];
+      }
+
+      return outputArr;
     }
     public static void main(String[] args) {
         System.out.println("-----Contains Duplicate-----");
@@ -148,9 +190,15 @@ public class MustDoLeetcodes {
         System.out.println("Anagrams: " + groupAnagrams(strs));
 
         System.out.println("-----Top K Frequent Elements-----");
-        int[] numsY = {1,1,1,2,2,3};
+//        int[] numsY = {1,1,1,2,2,3};
+        int[] numsY = {5,1,1,7,1,3,3,5};
         int k = 2;
         System.out.println("Top " + k + " frequent numbers: " + Arrays.toString(topKFrequent(numsY, k)));
 
+        System.out.println("------Product Except Self------");
+//        int[] numsX = {1,2,3,4};
+        int[] numsX = {-1,1,0,-3,3};
+//        int[] numsX = {1};
+        System.out.println("Products except self: " + Arrays.toString(productExceptSelf(numsX)));
     }
 }

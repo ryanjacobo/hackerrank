@@ -142,29 +142,66 @@ public class MustDoLeetcodes {
         // return an int[] that gets the product of all the other elements except the element in the current index
         System.out.println("nums: "+ Arrays.toString(nums));
       int arrLength = nums.length;
-      int[] leftProduct = new int[arrLength];
-      int[] rightProduct = new int[arrLength];
+      int[] leftProducts = new int[arrLength];
+      int[] rightProducts = new int[arrLength];
       int[] outputArr = new int[arrLength];
 
-      leftProduct[0] = 1;
-      rightProduct[arrLength-1] = 1;
+      leftProducts[0] = 1; // initialize index 0 with 1
+      rightProducts[arrLength-1] = 1; // initialize last index with 1
 
-
+      // leftProducts
       for(int i=1; i<arrLength; i++){
-          leftProduct[i] = nums[i-1] * leftProduct[i-1];
+          leftProducts[i] = nums[i-1] * leftProducts[i-1];
       }
-      System.out.println("leftProduct: " + Arrays.toString(leftProduct));
+      System.out.println("leftProducts: " + Arrays.toString(leftProducts));
 
+      // rightProducts
       for(int i=arrLength-2; i>=0; i--){
-          rightProduct[i] = nums[i+1] * rightProduct[i+1];
+          rightProducts[i] = nums[i+1] * rightProducts[i+1];
       }
-      System.out.println("rightProduct: "+ Arrays.toString(rightProduct));
+      System.out.println("rightProducts: "+ Arrays.toString(rightProducts));
 
       for(int i = 0; i<arrLength;i++){
-          outputArr[i]=leftProduct[i]*rightProduct[i];
+          outputArr[i]=leftProducts[i]*rightProducts[i];
+          System.out.println("outputArr" + Arrays.toString(outputArr));
       }
 
       return outputArr;
+    }
+
+    final static char DELIMETER = '#';
+
+    public static String encode(List<String> strs){
+        StringBuilder sb = new StringBuilder();
+        for(String str : strs) {
+            // build the string
+            sb.append(str.length());
+            sb.append(DELIMETER);
+            sb.append(str);
+        }
+        return sb.toString();
+    }
+
+    public static List<String> decode(String s){
+        List<String> splitS = new LinkedList<>();
+        char[] arr = s.toCharArray();
+        for(int i = 0; i < arr.length; i++){
+            StringBuilder sb = new StringBuilder();
+            while(arr[i] != DELIMETER){
+                sb.append(arr[i++]);
+            }
+            i++;
+            int numOfChars = Integer.valueOf(sb.toString());
+            int end = i + numOfChars;
+            sb = new StringBuilder();
+            while(i < end){
+                sb.append(arr[i++]);
+            }
+            i--;
+            splitS.add(sb.toString());
+        }
+        return splitS;
+
     }
     public static void main(String[] args) {
         System.out.println("-----Contains Duplicate-----");
@@ -197,8 +234,15 @@ public class MustDoLeetcodes {
 
         System.out.println("------Product Except Self------");
 //        int[] numsX = {1,2,3,4};
-        int[] numsX = {-1,1,0,-3,3};
+//        int[] numsX = {-1,1,0,-3,3};
 //        int[] numsX = {1};
+        int[] numsX = {1,2};
         System.out.println("Products except self: " + Arrays.toString(productExceptSelf(numsX)));
+
+        System.out.println("------Encode and Decode Strings-------");
+        List<String> strsX = Arrays.asList("Hello", "World");
+        String encoded = encode(strsX);
+        System.out.println("Encode string: " + encoded);
+        System.out.println("Decode string: " + decode(encoded));
     }
 }

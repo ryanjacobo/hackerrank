@@ -171,13 +171,16 @@ public class MustDoLeetcodes {
 
     final static char DELIMETER = '#';
 
+    // encode would require a delimeter and a character counter for decode to know where to separate the string and regroup the string
     public static String encode(List<String> strs){
         StringBuilder sb = new StringBuilder();
+
+        // append the strings in the list into 1 string with a character counter and delimiter
         for(String str : strs) {
             // build the string
-            sb.append(str.length());
-            sb.append(DELIMETER);
-            sb.append(str);
+            sb.append(str.length()); // append the str.length to str[i]
+            sb.append(DELIMETER); // append the delimeter to know the separation of the strings
+            sb.append(str); // append the str
         }
         return sb.toString();
     }
@@ -185,23 +188,31 @@ public class MustDoLeetcodes {
     public static List<String> decode(String s){
         List<String> splitS = new LinkedList<>();
         char[] arr = s.toCharArray();
+        System.out.println("arr: " + Arrays.toString(arr));
+
         for(int i = 0; i < arr.length; i++){
-            StringBuilder sb = new StringBuilder();
+//            find the number of characters after every delimeter
+            StringBuilder sb = new StringBuilder(); // rebuild each string
             while(arr[i] != DELIMETER){
-                sb.append(arr[i++]);
+//                sb.append(arr[i++]);
+                System.out.println("arr["+i+"]: " + sb.append(arr[i++]));
             }
-            i++;
+            System.out.println("arr[" + i + "]: " + arr[i++]);
+//            System.out.println("arr[" + i++ + "]: " + arr[i++]);
             int numOfChars = Integer.valueOf(sb.toString());
+            System.out.println("numOfChars: " + numOfChars);
             int end = i + numOfChars;
             sb = new StringBuilder();
             while(i < end){
                 sb.append(arr[i++]);
             }
-            i--;
+            i--; // to compensate
+            System.out.println("i--: " + i);
+            System.out.println(sb.toString());
             splitS.add(sb.toString());
         }
-        return splitS;
 
+        return splitS;
     }
     public static void main(String[] args) {
         System.out.println("-----Contains Duplicate-----");
@@ -240,7 +251,7 @@ public class MustDoLeetcodes {
         System.out.println("Products except self: " + Arrays.toString(productExceptSelf(numsX)));
 
         System.out.println("------Encode and Decode Strings-------");
-        List<String> strsX = Arrays.asList("Hello", "World");
+        List<String> strsX = Arrays.asList("Hallow", "World", "!");
         String encoded = encode(strsX);
         System.out.println("Encode string: " + encoded);
         System.out.println("Decode string: " + decode(encoded));

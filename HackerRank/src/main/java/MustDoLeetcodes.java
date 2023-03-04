@@ -178,38 +178,58 @@ public class MustDoLeetcodes {
         // append the strings in the list into 1 string with a character counter and delimiter
         for(String str : strs) {
             // build the string
-            sb.append(str.length()); // append the str.length to str[i]
-            sb.append(DELIMETER); // append the delimeter to know the separation of the strings
-            sb.append(str); // append the str
+//            sb.append(str.length()); // append the str.length to str[i]
+//            sb.append(DELIMETER); // append the delimeter to know the separation of the strings
+//            sb.append(str); // append the str
+
+            sb.append(str.length()).append(DELIMETER).append(str);
         }
         return sb.toString();
     }
 
-    public static List<String> decode(String s){
-        List<String> splitS = new LinkedList<>();
-        char[] arr = s.toCharArray();
-        System.out.println("arr: " + Arrays.toString(arr));
-
-        for(int i = 0; i < arr.length; i++){
-//            find the number of characters after every delimeter
-            StringBuilder sb = new StringBuilder(); // rebuild each string
-            while(arr[i] != DELIMETER){
+//    public static List<String> decode(String s){
+//        List<String> splitS = new LinkedList<>();
+//        char[] arr = s.toCharArray();
+//        System.out.println("arr: " + Arrays.toString(arr));
+//
+//        for(int i = 0; i < arr.length; i++){
+////            find the number of characters after every delimeter
+//            StringBuilder sb = new StringBuilder(); // rebuild each string
+//            while(arr[i] != DELIMETER){
+////                sb.append(arr[i++]);
+//                System.out.println("arr["+i+"]: " + sb.append(arr[i++]));
+//            }
+//            System.out.println("arr[" + i + "]: " + arr[i++]);
+////            System.out.println("arr[" + i++ + "]: " + arr[i++]);
+//            int numOfChars = Integer.valueOf(sb.toString());
+//            System.out.println("numOfChars: " + numOfChars);
+//            int end = i + numOfChars;
+//            sb = new StringBuilder();
+//            while(i < end){
 //                sb.append(arr[i++]);
-                System.out.println("arr["+i+"]: " + sb.append(arr[i++]));
+//            }
+//            i--; // to compensate
+//            System.out.println("i--: " + i);
+//            System.out.println(sb.toString());
+//            splitS.add(sb.toString());
+//        }
+//
+//        return splitS;
+//    }
+
+    public static List decode(String s){
+        List splitS = new LinkedList();
+        int start = 0;
+        int end = 0;
+        while(end<s.length()){
+            if(s.charAt(end) == DELIMETER){
+                int length = Integer.valueOf(s.substring(start, end));
+
+                splitS.add(s.substring(end + 1, end + 1 + length));
+                start = end + 1 + length;
+                end =start;
             }
-            System.out.println("arr[" + i + "]: " + arr[i++]);
-//            System.out.println("arr[" + i++ + "]: " + arr[i++]);
-            int numOfChars = Integer.valueOf(sb.toString());
-            System.out.println("numOfChars: " + numOfChars);
-            int end = i + numOfChars;
-            sb = new StringBuilder();
-            while(i < end){
-                sb.append(arr[i++]);
-            }
-            i--; // to compensate
-            System.out.println("i--: " + i);
-            System.out.println(sb.toString());
-            splitS.add(sb.toString());
+            end++;
         }
 
         return splitS;
@@ -251,7 +271,7 @@ public class MustDoLeetcodes {
         System.out.println("Products except self: " + Arrays.toString(productExceptSelf(numsX)));
 
         System.out.println("------Encode and Decode Strings-------");
-        List<String> strsX = Arrays.asList("Hallow", "World", "!");
+        List<String> strsX = Arrays.asList("Back", "to", "the", "Future");
         String encoded = encode(strsX);
         System.out.println("Encode string: " + encoded);
         System.out.println("Decode string: " + decode(encoded));

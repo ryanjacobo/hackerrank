@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class MustDoLeetcodes {
 
@@ -219,21 +220,101 @@ public class MustDoLeetcodes {
 
     public static List decode(String s){
         List splitS = new LinkedList();
-        int start = 0;
-        int end = 0;
-        while(end<s.length()){
-            if(s.charAt(end) == DELIMETER){
-                int length = Integer.valueOf(s.substring(start, end));
+        int start = 0; // first character of the substring
+        int end = 0; // last character of the substring
+        System.out.println("s.length(): " + s.length());
 
-                splitS.add(s.substring(end + 1, end + 1 + length));
-                start = end + 1 + length;
-                end =start;
+//        while end is less than s.length()
+        while(end<s.length()){
+            // if char is #
+            if(s.charAt(end) == DELIMETER){
+                System.out.println("start: " + start + ", " + "end: " + end);
+                int subStrLength = Integer.valueOf(s.substring(start, end)); // gets the value generated in the encode
+
+//                System.out.println("s.charAt(end): " + s.charAt(end));
+                System.out.println("substring length: " + subStrLength);
+
+//                String subString = s.substring(end + 1, end + 1 + subStrLength); // start = #(index) + 1, end = #(index) + 1 + subStrLength
+
+                int startSubString = end + 1, endSubString = startSubString + subStrLength;
+                String subString = s.substring(startSubString, endSubString);
+                splitS.add(subString);
+
+                System.out.println("start: " + startSubString);
+                System.out.println("end: " + endSubString);
+                System.out.println("substring: " + subString);
+
+                start = end + 1 + subStrLength;
+                end = start;
             }
+            System.out.println("end++: " + end);
             end++;
         }
 
         return splitS;
     }
+
+    public static int longestConsecutive(int[] nums){
+        System.out.println("nums: " + Arrays.toString(nums));
+//        Arrays.sort(nums);
+//        System.out.println("nums sorted: " + Arrays.toString(nums));
+//
+//        Set<Integer> setNums = Arrays.stream(nums).boxed().collect(Collectors.toSet());
+//        System.out.println("setNums: " + setNums);
+//
+//        return setNums.size();
+
+        // Using HashSet to find the longest consecutive
+//        Time complexity: O(n)
+//        Space complexity: O(n)
+//        if (nums.length == 0) return 0;
+        HashSet<Integer> set = new HashSet<>(); // use HashSet to remove duplicate elements
+        int ans = 0; // will hold the length of the longest consecutive numbers
+
+        for (int num : nums) set.add(num); // add each element to HashSet
+        System.out.println("HashSet: " + set);
+
+        for (int num : set) {
+            // "if" statement is to satisfy O(n). Without the "if" statement, time complexity is O(nlogn).
+            if (!set.contains(num - 1)) {
+                int count = 0; // works with variable initiated with 1 too
+                // while set has an element next to the num incremented by 1
+                while (set.contains(num + count)) {
+//                    num++;
+                    count++;
+                }
+                ans = Math.max(count, ans); // assigns the maximum count to ans
+            }
+        }
+        return ans;
+    }
+
+    public static boolean isPalindrome(String s) {
+        boolean ans = true;
+        String sReversed = "";
+
+        // remove non-alphanumeric characters from s
+        s = s.replaceAll("[^a-zA-Z0-9]", "");
+        System.out.println("s: " + s);
+
+        // lowercase
+        s = s.toLowerCase();
+        System.out.println("s lowercased: " + s);
+
+        // reverse s
+        for(int i = s.length() - 1; i>=0; i--){
+            sReversed += s.charAt(i);
+        }
+        System.out.println("sReversed: " + sReversed);
+
+//        if(sReversed == s) {
+        if(s.equals(sReversed)) {
+            return ans;
+        }
+        ans = false;
+        return ans;
+    }
+
     public static void main(String[] args) {
         System.out.println("-----Contains Duplicate-----");
         int[] nums = {1,2,3,1};
@@ -275,5 +356,16 @@ public class MustDoLeetcodes {
         String encoded = encode(strsX);
         System.out.println("Encode string: " + encoded);
         System.out.println("Decode string: " + decode(encoded));
+
+        System.out.println("-----Longest Consecutive------");
+//        int[] numsZ = {2,2,3,1,11,6,9,7,8,4};
+//        int[] numsZ = {100,4,200,1,1,3,2};
+        int[] numsZ = {0,3,7,2,5,8,4,6,0,1};
+        System.out.println("longest consecutive numbers: " + longestConsecutive(numsZ));
+
+        System.out.println("-----Valid Palindrome------");
+//        String str = "race a car";
+        String str = "A man, a plan, a canal: Panama";
+        System.out.println("is " + str + " a palindrome? " + isPalindrome(str));
     }
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class LinkedListComparison {
+public class ListsComparison {
 
     // "List<>" is an interface whereas ArrayList, LinkedList, etc. are classes. List<> recognizes all types of List i.e. ArrayList, LinkedList, etc.
     private static void doTimings(String type, List<Integer> list) {

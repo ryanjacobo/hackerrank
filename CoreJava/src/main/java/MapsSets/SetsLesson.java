@@ -7,7 +7,7 @@ import java.util.TreeSet;
 
 public class SetsLesson {
     public static void main(String[] args) {
-        Set<String> set1 = new HashSet<String>(); // HashSet arranges the items in no particular order; randomly
+        Set<String> set1 = new HashSet<String>(); // HashSet arranges the items in no particular order
 //        Set<String> set1 = new LinkedHashSet<String>(); // LinkedHashSet remembers the order of the items
 //        Set<String> set1 = new TreeSet<String>(); // TreeSet arranges the items alphabetically
 
@@ -19,7 +19,7 @@ public class SetsLesson {
 
         set1.add("dog"); // set ignores duplicates
 
-        System.out.println(set1);
+        System.out.println("HashSet: " + set1);
 
         // Iterate through the set
         for(String element: set1) {

@@ -2,7 +2,7 @@ package Lists;
 
 import java.util.ArrayList;
 
-public class ArrayListLesson {
+public class ListLesson {
     public static void main(String[] args) {
         ArrayList<Integer> numbers = new ArrayList<Integer>(); // "Integer" must be capitalized (non-primitive). "()" holds the size of the ArrayList. 10 is the default(blank).
         numbers.add(12);

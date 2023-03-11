@@ -286,7 +286,7 @@ public class MustDoLeetcodes {
 
         // nums.length - 2 will check if third from the last and last 2-pair sums up to 0
         for(int i = 0; i < nums.length - 2; i++){
-            // handles the duplicate
+            // handles the duplicate, if i == 0 or i > 0 and element is not equal to previous element, else proceed to next elemment
             if(i == 0 || (i > 0 && nums[i] != nums[i-1])){
 //                if(i >= 0 && nums[i] != nums[i-1]){
                     int low = i+1; // first of pair

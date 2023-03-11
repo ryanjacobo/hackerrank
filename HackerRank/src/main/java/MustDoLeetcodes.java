@@ -296,7 +296,7 @@ public class MustDoLeetcodes {
                     while(low < high){
                         // to find pair to sum 0
                         if(nums[low] + nums[high] == sum){
-                            result.add(Arrays.asList(nums[i], nums[low], nums[high]));
+                            result.add(Arrays.asList(nums[i], nums[low], nums[high])); // add the elements to result list
                             while(low < high && nums[low] == nums[low+1])low++; // to skip duplicate low elements
                             while(low < high && nums[high] == nums[high-1])high--;// to skip duplicate high elements
                             low++; 
@@ -311,6 +311,34 @@ public class MustDoLeetcodes {
         }
         System.out.println("nums sorted: " + Arrays.toString(nums));
         return result;
+    }
+
+    public static int maxArea(int[] height) {
+        System.out.println("height: " + Arrays.toString(height));
+        int ans = 0;
+        int left = 0;
+        int right = height.length-1;
+
+        while(left < right){
+            System.out.println("left: " + left + ", " + "right: " + right);
+            if(height[left] < height[right]){
+                ans = Math.max(ans, height[left] * (left-right));
+                left += 1;
+            } else {
+                ans = Math.max(ans, height[right] * (left-right));
+                right -= 1;
+            }
+        }
+        return ans;
+
+//        int ans = 0;
+//        for (int left = 0; left < height.length; left++) {
+//            for (int right = left + 1; right < height.length; right++) {
+//                int width = right - left;
+//                ans = Math.max(ans, Math.min(height[left], height[right]) * width);
+//            }
+//        }
+//        return ans;
     }
     public static void main(String[] args) {
         System.out.println("-----Contains Duplicate-----");
@@ -368,5 +396,9 @@ public class MustDoLeetcodes {
         System.out.println("------Three Sum-----");
         int[] numsU = {-1,0,1,2,-1,-4};
         System.out.println("Three sum: " + threeSum(numsU));
+
+        System.out.println("-----Container with most water-----");
+        int[] height = {1,8,6,2,5,4,8,3,7};
+        System.out.println("Max area: " + maxArea(height));
     }
 }

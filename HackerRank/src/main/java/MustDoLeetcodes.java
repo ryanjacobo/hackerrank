@@ -188,36 +188,6 @@ public class MustDoLeetcodes {
         return sb.toString();
     }
 
-//    public static List<String> decode(String s){
-//        List<String> splitS = new LinkedList<>();
-//        char[] arr = s.toCharArray();
-//        System.out.println("arr: " + Arrays.toString(arr));
-//
-//        for(int i = 0; i < arr.length; i++){
-////            find the number of characters after every delimeter
-//            StringBuilder sb = new StringBuilder(); // rebuild each string
-//            while(arr[i] != DELIMETER){
-////                sb.append(arr[i++]);
-//                System.out.println("arr["+i+"]: " + sb.append(arr[i++]));
-//            }
-//            System.out.println("arr[" + i + "]: " + arr[i++]);
-////            System.out.println("arr[" + i++ + "]: " + arr[i++]);
-//            int numOfChars = Integer.valueOf(sb.toString());
-//            System.out.println("numOfChars: " + numOfChars);
-//            int end = i + numOfChars;
-//            sb = new StringBuilder();
-//            while(i < end){
-//                sb.append(arr[i++]);
-//            }
-//            i--; // to compensate
-//            System.out.println("i--: " + i);
-//            System.out.println(sb.toString());
-//            splitS.add(sb.toString());
-//        }
-//
-//        return splitS;
-//    }
-
     public static List decode(String s){
         List splitS = new LinkedList();
         int start = 0; // first character of the substring
@@ -256,13 +226,6 @@ public class MustDoLeetcodes {
 
     public static int longestConsecutive(int[] nums){
         System.out.println("nums: " + Arrays.toString(nums));
-//        Arrays.sort(nums);
-//        System.out.println("nums sorted: " + Arrays.toString(nums));
-//
-//        Set<Integer> setNums = Arrays.stream(nums).boxed().collect(Collectors.toSet());
-//        System.out.println("setNums: " + setNums);
-//
-//        return setNums.size();
 
         // Using HashSet to find the longest consecutive
 //        Time complexity: O(n)
@@ -315,6 +278,40 @@ public class MustDoLeetcodes {
         return ans;
     }
 
+    // find all triplets in the array that sum up to 0
+    public static List<List<Integer>> threeSum(int[] nums){
+        System.out.println("nums: " + Arrays.toString(nums));
+        List<List<Integer>> result = new LinkedList<>();
+        Arrays.sort(nums);
+
+        // nums.length - 2 will check if third from the last and last 2-pair sums up to 0
+        for(int i = 0; i < nums.length - 2; i++){
+            // handles the duplicate
+            if(i == 0 || (i > 0 && nums[i] != nums[i-1])){
+//                if(i >= 0 && nums[i] != nums[i-1]){
+                    int low = i+1; // first of pair
+                    int high = nums.length-1; // second of pair
+                    int sum = 0-nums[i]; // value needed of 2-pair to sum up to 0
+
+                    while(low < high){
+                        // to find pair to sum 0
+                        if(nums[low] + nums[high] == sum){
+                            result.add(Arrays.asList(nums[i], nums[low], nums[high]));
+                            while(low < high && nums[low] == nums[low+1])low++;
+                            while(low < high && nums[high] == nums[high-1])high--;
+                            low++;
+                            high--;
+                        } else if (nums[low] + nums[high] > sum){
+                            high--;
+                        } else {
+                            low++;
+                        }
+                    }
+            }
+        }
+        System.out.println("nums sorted: " + Arrays.toString(nums));
+        return result;
+    }
     public static void main(String[] args) {
         System.out.println("-----Contains Duplicate-----");
         int[] nums = {1,2,3,1};
@@ -367,5 +364,9 @@ public class MustDoLeetcodes {
 //        String str = "race a car";
         String str = "A man, a plan, a canal: Panama";
         System.out.println("is " + str + " a palindrome? " + isPalindrome(str));
+
+        System.out.println("------Three Sum-----");
+        int[] numsU = {-1,0,1,2,-1,-4};
+        System.out.println("Three sum: " + threeSum(numsU));
     }
 }

@@ -297,9 +297,9 @@ public class MustDoLeetcodes {
                         // to find pair to sum 0
                         if(nums[low] + nums[high] == sum){
                             result.add(Arrays.asList(nums[i], nums[low], nums[high]));
-                            while(low < high && nums[low] == nums[low+1])low++;
-                            while(low < high && nums[high] == nums[high-1])high--;
-                            low++;
+                            while(low < high && nums[low] == nums[low+1])low++; // to skip duplicate low elements
+                            while(low < high && nums[high] == nums[high-1])high--;// to skip duplicate high elements
+                            low++; 
                             high--;
                         } else if (nums[low] + nums[high] > sum){
                             high--;

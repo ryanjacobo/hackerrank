@@ -315,30 +315,63 @@ public class MustDoLeetcodes {
 
     public static int maxArea(int[] height) {
         System.out.println("height: " + Arrays.toString(height));
-        int ans = 0;
+        int maxArea = 0;
         int left = 0;
         int right = height.length-1;
 
+        // loop through height array (0 to last index)
         while(left < right){
-            System.out.println("left: " + left + ", " + "right: " + right);
+            maxArea = Math.max(maxArea, (right-left)*Math.min(height[left], height[right])); // find the maxArea where width(right - left) * height.min(height[left], height[right])
+
+            // to find tallest left and right heights
             if(height[left] < height[right]){
-                ans = Math.max(ans, height[left] * (left-right));
-                left += 1;
+                left++;
             } else {
-                ans = Math.max(ans, height[right] * (left-right));
-                right -= 1;
+                right--;
             }
         }
-        return ans;
+        return maxArea;
+    }
 
-//        int ans = 0;
-//        for (int left = 0; left < height.length; left++) {
-//            for (int right = left + 1; right < height.length; right++) {
-//                int width = right - left;
-//                ans = Math.max(ans, Math.min(height[left], height[right]) * width);
-//            }
-//        }
-//        return ans;
+    public static int maxProfit(int[] prices){
+        System.out.println("Prices: " + Arrays.toString(prices));
+        int maxProfit = 0;
+        int buy = 0;
+        int sell = prices.length-1;
+        while(buy < sell){
+            System.out.println("buy: " + prices[buy] + ", sell: " + prices[sell]);
+            maxProfit = Math.max(maxProfit, prices[sell] - prices[buy]);
+
+            if(prices[buy] > prices[sell]){
+                buy++;
+            } else {
+                sell--;
+            }
+        }
+        return maxProfit;
+    }
+
+    // Get the length of the longest substring without duplicate characters
+    private static int lengthOfLongestSubstring(String s) {
+        System.out.println(s);
+        int maxLength = 0;
+        // use sliding-window algorithm
+        int left = 0;
+        int right = 0;
+
+        Set<Character> subStr = new HashSet<>();
+
+        while(right<s.length()){
+            if(!subStr.contains(s.charAt(right))){
+                subStr.add(s.charAt(right));
+                right++;
+                maxLength = Math.max(subStr.size(), maxLength);
+            } else {
+                subStr.remove(s.charAt(left));
+                left++;
+            }
+        }
+        return maxLength;
     }
     public static void main(String[] args) {
         System.out.println("-----Contains Duplicate-----");
@@ -398,7 +431,18 @@ public class MustDoLeetcodes {
         System.out.println("Three sum: " + threeSum(numsU));
 
         System.out.println("-----Container with most water-----");
-        int[] height = {1,8,6,2,5,4,8,3,7};
+//        int[] height = {1,8,6,2,5,4,8,3,7};
+        int[] height = {1,6,2,5,4,8,3,7};
         System.out.println("Max area: " + maxArea(height));
+
+        System.out.println("-----Best time to buy and sell stock-----");
+        int[] prices = {7,1,5,3,6,4};
+        System.out.println("Max profit: " + maxProfit(prices));
+
+        System.out.println("-----Longest Substring without repeating characters------");
+        String sX = "abcabcbb";
+        System.out.println("Max Length: " + lengthOfLongestSubstring(sX));
     }
+
+
 }

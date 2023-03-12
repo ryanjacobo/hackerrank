@@ -51,7 +51,7 @@ String.valueOf(<intArrayName>).toCharArray(); // to break up an int to a char[];
 String.valueOf(<intArrayName>).split(""); // to break up an int to a String[];
 ```
 ```java
-Math.min(int x, int y, ...); // to return the min of specified integers
+Math.min(int x, int y, ...); // to return the min of specified integers; return the smaller (first element) of the arguments
 ```
 ```java
 Set<Integer> <var name> =  Arrays.stream(<int[] name>).boxed().collect(Collectors.toSet()); // to convert an int[] to a HashSet, ideal for removing duplicate elements
@@ -163,7 +163,7 @@ Set<type> setName = new HashSet<>(<listName>); declaring and initializing a Hash
 Queue<> qName = new PriorityQueue<>();
 ```
 ```java
-Parent value should always be less than the chile value.
+Parent value should always be less than the child value.
 ```
 ```java
 parent = Arr[(i-1)/2]

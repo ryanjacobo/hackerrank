@@ -379,25 +379,30 @@ public class MustDoLeetcodes {
 
     public static int characterReplacement(String s, int k) {
         System.out.println("s: " + s + ", " + "k: " + k);
-       char[] sArr = s.toCharArray(); // convert String to char[]
+        char[] sArr = s.toCharArray(); // convert String to char[]
         int left = 0, right = 0, n = sArr.length;
 
         Map<Character, Integer> charFreq = new HashMap<>();
 
         // maxLen is the required output (max length of substring after k has been used up), mostFreq is the char most frequent in the substring
-        int maxLen = 0, mostFreq = 0;
+        int maxLen = 0;
+        int mostFreq = 0;
 
-        //find longest repeating character replacement
+        //find maxLength of repeating characters after using give k
         while(right < n){
+//            int mostFreq = 0; // gives wrong maxLength
+
             int count = charFreq.getOrDefault(sArr[right], 0) + 1; // getOrDefault adds the char to the map and counts the char occurance
             // expand the window
             charFreq.put(sArr[right], count);
-            System.out.println("sArr[" + right + "]: " + sArr[right] + ", " + count);
-            mostFreq = Math.max(mostFreq, charFreq.get(sArr[right])); // track the char with max frequency (char, current char value)
+            System.out.println("sArr[" + right + "]: " + sArr[right] + ", count: " + count);
+
+            // track the char with max frequency (char, current char value)
+            mostFreq = Math.max(mostFreq, charFreq.get(sArr[right]));
             System.out.println("mostFreq: " + mostFreq + ", " + charFreq.get(sArr[right]) + ": " + sArr[right]);
 
-
-            // to check if characters needed to be replaced in the substring is still <= k, shrink the window if we need to replace more than k char
+            // right - left + 1 is the formula to get the current substring.length e.g. index(3) - index(0) + 1 = 4,
+            // shrink the window if substring.length - mostFreq char gets more than k char
             if((right - left + 1) - mostFreq > k){
                 int reduceCharVal = charFreq.get(sArr[left]) - 1;
                 charFreq.put(sArr[left], reduceCharVal); // sArr[left] value gets reduced
@@ -483,9 +488,11 @@ public class MustDoLeetcodes {
         System.out.println("Max Length: " + lengthOfLongestSubstring(sX));
 
         System.out.println("-----Longest Repeating character replacement-----");
-//        String sY = "ABAB";
-        String sY = "AABABBA";
-        int kX = 1;
+        String sY = "ABBBA";
+        int kX = 2;
+
+//        String sY = "AABABBA";
+//        int kX = 1;
         System.out.println("Longest Repeating character after replacement: " + characterReplacement(sY, kX));
     }
 

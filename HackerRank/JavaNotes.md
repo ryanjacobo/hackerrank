@@ -97,62 +97,65 @@ List<List<Integers>> nestedList = List.of(
 ); // Add a nested list inside a list, list created will be unmodifiable
 ```
 ```java
-Collections.reverse(<listName>); - reverse a list
+Collections.reverse(<listName>); // reverse a list
 ```
 ```java
-Collections.rotate(<listName>, k); - Shift elements of a list by k indices
+Collections.rotate(<listName>, k); // Shift elements of a list by k indices
 ```
 ```java
-Collections.max(<listName>); - get the max value in the list
+Collections.max(<listName>); // get the max value in the list
 ```
 ```java
-Collections.min(<listName>); - get the min value in the list
+Collections.min(<listName>); // get the min value in the list
 ```
 ```java
-Collections.sort(<listName>); - sort the list in ascending order
+Collections.sort(<listName>); // sort the list in ascending order
 ```
 ```java
-Collections.singleton(<element(s)>); - picks common specified elements from the list (usage example is removing common elements from a list)
+Collections.singleton(<element(s)>); // picks common specified elements from the list (usage example is removing common elements from a list)
 ```
 ```java
-list.indexOf(<elementName>); - get the corresponding index of a given element
+list.indexOf(<elementName>); // get the corresponding index of a given element
 ```
 ```java
 list.indexOf(<element>);
 ```
 ```java
-list.remove(<index>); - remove element from the list
+list.remove(<index>); // remove element from the list
 ```
 ```java
-list.removeAll(<Collections>); - removes elements specified in the Collections
+list.removeAll(<Collections>); // removes elements specified in the Collections
 ```
 
 ### Maps - HashMap, LinkedMap, TreeMap
 ```java
-Map<dataType, dataType> <varName> = new HashMap<>(); - create a HashMap;
+Map<dataType, dataType> <varName> = new HashMap<>(); // create a HashMap;
 ```
 ```java
-`<varName>.put(key, value); - add a key-value pair to the map;
+<varName>.put(key, value); // add a key-value pair to the map;
 ```
 ```java
-<varName.get(key); - retrieve value of specified string;
+<varName.get(key); // retrieve value of specified string;
 ```
 ```java
-<mapName>.containsKey(
+<mapName>.containsKey(keyElement); // returns a boolean to confirm whether of not the key is in the map
+```
+```java
+<mapName>.getOrDefault(); // to retrieve the value associated with a specified key in the map, or a default value if the key is not present in the map
 ```
 
 ### Set - HashSet
 ```java
-<setName>.contains(<element>); - to check if set contains the element specified, returns a boolean
+<setName>.contains(<element>); // to check if set contains the element specified, returns a boolean
 ```
 ```java
-<setName>.contains(<setName>[index]); - to check if set has element being compared from another set, returns a boolean
+<setName>.contains(<setName>[index]); // to check if set has element being compared from another set, returns a boolean
 ```
 ```java
-<setName>.clear(); - to clear the set
+<setName>.clear(); // to clear the set
 ```
 ```java
-<setName>.addAll(<listName>); - to add all elements in a list to a set
+<setName>.addAll(<listName>); // to add all elements in a list to a set
 ```
 ```java
 Set<type> setName = new HashSet<>(<listName>); declaring and initializing a HashSet

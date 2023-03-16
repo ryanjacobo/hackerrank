@@ -390,7 +390,7 @@ public class MustDoLeetcodes {
 
         //find maxLength of repeating characters after using give k
         while(right < n){
-//            int mostFreq = 0; // gives wrong maxLength
+//            int mostFreq = 0; // gives wrong maxLength, shouldn't be iterated in the loop every time
 
             int count = charFreq.getOrDefault(sArr[right], 0) + 1; // getOrDefault adds the char to the map and counts the char occurance
             // expand the window
@@ -417,6 +417,45 @@ public class MustDoLeetcodes {
 
     }
 
+    // return a substring in s that contains all characters of t
+    public static String minWindow(String s, String t) {
+        System.out.println("s: " + s);
+        System.out.println("t: " + t);
+        String minWindow = "";
+
+        Map<Character, Integer> tMap = new HashMap<>();
+
+        for(char tChar : t.toCharArray()){
+            tMap.put(tChar, tMap.getOrDefault(tChar, 0) + 1);
+        }
+
+        int matched = 0;
+        int start = 0;
+        int minLen = s.length() + 1;
+        int subStr = 0;
+        for(int end = 0; end < s.length(); end++){
+            char sChar = s.charAt(end);
+            // check sChar is in t String
+            if(tMap.containsKey(sChar)){
+                tMap.put(sChar, tMap.get(sChar)-1);
+                if(tMap.get(sChar) == 0) matched++;
+            }
+
+            while(matched == tMap.size()){
+                if(minLen > end - start +1){
+                    minLen = end - start + 1;
+                    subStr = start;
+                }
+                char deleted = s.charAt(start++);
+                if(tMap.containsKey(deleted)){
+                    if(tMap.get(deleted) == 0) matched--;
+                    tMap.put(deleted, tMap.get(deleted) + 1);
+                }
+            }
+        }
+
+        return minLen>s.length()?"":s.substring(subStr, subStr + minLen);
+    }
     public static void main(String[] args) {
         System.out.println("-----Contains Duplicate-----");
         int[] nums = {1,2,3,1};
@@ -494,7 +533,10 @@ public class MustDoLeetcodes {
 //        String sY = "AABABBA";
 //        int kX = 1;
         System.out.println("Longest Repeating character after replacement: " + characterReplacement(sY, kX));
+
+        System.out.println("-----Minimum Window Substring-----");
+        String sZ = "ADOBECODEBANC";
+        String tX = "ABC";
+        System.out.println("Minimum Window Substring: " + minWindow(sZ, tX));
     }
-
-
 }

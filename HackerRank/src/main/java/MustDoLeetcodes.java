@@ -102,7 +102,7 @@ public class MustDoLeetcodes {
 
     public static int[] topKFrequent(int[] nums, int k) {
         System.out.println("nums: " + Arrays.toString(nums));
-        // key = element, value = element frequency
+        // key = element, value = element tMap
         Map<Integer, Integer> numFreq = new HashMap<>();
         // priority queue to sort the values according to max value (occurences)
         Queue<Integer> pq = new PriorityQueue<>((a, b) -> Integer.compare(numFreq.get(a), numFreq.get(b)));
@@ -397,7 +397,7 @@ public class MustDoLeetcodes {
             charFreq.put(sArr[right], count);
             System.out.println("sArr[" + right + "]: " + sArr[right] + ", count: " + count);
 
-            // track the char with max frequency (char, current char value)
+            // track the char with max tMap (char, current char value)
             mostFreq = Math.max(mostFreq, charFreq.get(sArr[right]));
             System.out.println("mostFreq: " + mostFreq + ", " + charFreq.get(sArr[right]) + ": " + sArr[right]);
 
@@ -417,44 +417,82 @@ public class MustDoLeetcodes {
 
     }
 
-    // return a substring in s that contains all characters of t
+    // return the smallest substring in s that contains all characters of t
     public static String minWindow(String s, String t) {
-        System.out.println("s: " + s);
-        System.out.println("t: " + t);
-        String minWindow = "";
+//        System.out.println("s: " + s);
+//        System.out.println("t: " + t);
 
         Map<Character, Integer> tMap = new HashMap<>();
 
+        // characters that need to be in the s substring, put every t char in tMap and increment default value (0) by 1 (or make default value 1)
         for(char tChar : t.toCharArray()){
-            tMap.put(tChar, tMap.getOrDefault(tChar, 0) + 1);
+            tMap.put(tChar, tMap.getOrDefault(tChar, 0)+1); // initial value for getOrDefault is 0
         }
 
+        System.out.println("s.length(): " + s.length());
+        System.out.println("tMap: " + tMap);
+//        System.out.println("tMap values sum: " + tMap.values().stream().mapToInt(i->i).sum());
         int matched = 0;
-        int start = 0;
-        int minLen = s.length() + 1;
-        int subStr = 0;
-        for(int end = 0; end < s.length(); end++){
-            char sChar = s.charAt(end);
-            // check sChar is in t String
+        int startIndex = 0;
+//        int minLen = s.length() + 1; // "+1" is to accommodate arguments with s.length < t.length
+        int minLen = Integer.MAX_VALUE;
+        int minWinIndex = 0; // serves as first and last index of result substring
+
+        System.out.println("minLen: " + minLen);
+        // loop through s String
+        for(int endIndex = 0; endIndex < s.length(); endIndex++){
+            char sChar = s.charAt(endIndex);
+//            System.out.println("sChar: " + sChar);
+            // if tMap contains sChar,
             if(tMap.containsKey(sChar)){
-                tMap.put(sChar, tMap.get(sChar)-1);
-                if(tMap.get(sChar) == 0) matched++;
+//                System.out.println("sCharVal: " + tMap.get(sChar));
+                int sCharVal = tMap.get(sChar) - 1; // deduct 1 from the key value to indicate that 1 char has been found
+//                System.out.println("sCharVal - 1: " + sCharVal);
+                tMap.put(sChar, sCharVal); // update the substring
+//                System.out.println("sChar: " + sChar + ", sCharVal: " + sCharVal);
+//                if(tMap.get(sChar) == 0) matched++;
+                if(sCharVal == 0) matched++; // increment match whenever a char is found in the substring
+//                System.out.println("matched: " + matched);
             }
 
+            // when all chars of t has been found
             while(matched == tMap.size()){
-                if(minLen > end - start +1){
-                    minLen = end - start + 1;
-                    subStr = start;
+//                System.out.println("minLen: " + minLen);
+                int subStrLen = endIndex - startIndex + 1; // get the length of the substring
+                if(minLen > subStrLen){
+                    minLen = subStrLen;
+                    minWinIndex = startIndex;
                 }
-                char deleted = s.charAt(start++);
-                if(tMap.containsKey(deleted)){
-                    if(tMap.get(deleted) == 0) matched--;
-                    tMap.put(deleted, tMap.get(deleted) + 1);
+                // move startIndex forward (delete preceding chars)
+                char deletedChar = s.charAt(startIndex++);
+
+                if(tMap.containsKey(deletedChar)){
+                    if(tMap.get(deletedChar) == 0) matched--;
+
+                    tMap.put(deletedChar, tMap.get(deletedChar) + 1);
                 }
             }
         }
 
-        return minLen>s.length()?"":s.substring(subStr, subStr + minLen);
+        int lastCharIndex = minWinIndex + minLen;
+        System.out.println("start char: " + minWinIndex + ", " + "last char: " + lastCharIndex);
+        return minLen>s.length()?"":s.substring(minWinIndex, lastCharIndex); // if minLength (t.length() + 1) > s.length(), return ""
+//        return s.substring(minWinIndex, lastCharIndex);
+    }
+
+    // substring Permutation
+    public static boolean checkInclusion(String s1, String s2) {
+        boolean result = true;
+
+        if(s1.length()>s2.length() || s1.length() == 0) result = false;
+
+        Map<Character, Integer> s1Map = new HashMap<>();
+        for(char s1Char : s1.toCharArray()){
+            s1Map.put(s1Char, s1Map.getOrDefault(s1Char, 0)+1);
+        }
+
+        System.out.println("s1Map: " + s1Map);
+        return result;
     }
     public static void main(String[] args) {
         System.out.println("-----Contains Duplicate-----");
@@ -535,8 +573,17 @@ public class MustDoLeetcodes {
         System.out.println("Longest Repeating character after replacement: " + characterReplacement(sY, kX));
 
         System.out.println("-----Minimum Window Substring-----");
-        String sZ = "ADOBECODEBANC";
+//        String sZ = "ADOBECODEBANC";
+//        String sZ = "BANCADOBECODE";
+        String sZ = "BANCADOBECODECNAB";
         String tX = "ABC";
+//        String sZ = "a";
+//        String tX = "aa";
         System.out.println("Minimum Window Substring: " + minWindow(sZ, tX));
+
+        System.out.println("-----Permutation String-------");
+        String s1 = "ab";
+        String s2 = "eidbaooo";
+        System.out.println("Permutation String: " + checkInclusion(s1, s2));
     }
 }

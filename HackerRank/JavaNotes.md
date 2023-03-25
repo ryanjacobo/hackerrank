@@ -143,7 +143,9 @@ Map<dataType, dataType> <varName> = new HashMap<>(); // create a HashMap;
 ```java
 <mapName>.getOrDefault(); // to retrieve the value associated with a specified key in the map, or a default value if the key is not present in the map
 ```
-
+```java
+<mapName>.values().stream().mapToInt(i->i).sum(); // to get the sum of the map values
+```
 ### Set - HashSet
 ```java
 <setName>.contains(<element>); // to check if set contains the element specified, returns a boolean

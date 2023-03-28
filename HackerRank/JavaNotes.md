@@ -203,3 +203,4 @@ Iterator<Type> iterator = qName.iterator();
         System.out.println(s1 == s3); // false
         System.out.println(s1.equals(s2)); // true
       ```
+* Highlight the code block + **Ctrl+Alt+L** - Format a code block

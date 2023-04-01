@@ -467,6 +467,8 @@ public class MustDoLeetcodes {
 //                    subStrLen = endIndex - startIndex + 1;
                     subStrIndex = startIndex; // gets incremented whenever a char not in tMap gets deleted
                 }
+
+                // moves left marker to the next char therefore removing previous char and decreasing the window size
                 char deletedChar = s.charAt(startIndex++);
 //                System.out.println("deletedChar: " + deletedChar);
 
@@ -525,8 +527,9 @@ public class MustDoLeetcodes {
                     result = false;
                 }
 
-                // sliding the left side of the window, ends while loop and returns to for loop
+                // sliding the left side of the window, ends while-loop and returns to for-loop
                 char deleted = s2.charAt(left++);
+                System.out.println("deleted: " + deleted);
                 if (s1Map.containsKey(deleted)) {
                     if (s1Map.get(deleted) == 0) matched--; // if deleted char value is 0, decrease matched to get it back to the for loop for the next char is s2
                     s1Map.put(deleted, s1Map.get(deleted) + 1); // s1Map char value increments and goes back to for loop
@@ -535,6 +538,76 @@ public class MustDoLeetcodes {
             }
         }
         return result;
+    }
+
+    public static boolean isValid(String s){
+        System.out.println("parentheses: " + s);
+
+        Stack<Character> matches = new Stack<>();
+        for(char oneSide : s.toCharArray()){
+            if(oneSide == '(' || oneSide == '{' || oneSide == '['){
+                matches.push(oneSide);
+            } else if (oneSide == ')' && !matches.isEmpty() && matches.peek() == '('){
+                matches.pop();
+            } else if (oneSide == '}' && !matches.isEmpty() && matches.peek() == '{'){
+                matches.pop();
+            } else if (oneSide == ']' && !matches.isEmpty() && matches.peek() == '['){
+                matches.pop();
+            }
+        }
+        return matches.isEmpty();
+    }
+
+    public static int findMin(int[] nums) {
+        System.out.println("nums: " + Arrays.toString(nums));
+        Arrays.sort(nums);
+
+        return nums[0];
+    }
+
+    public static int search(int[] nums, int target){
+        // return the index of the element specified by the target
+        System.out.println("nums: " + Arrays.toString(nums));
+        System.out.println("target: " + target);
+
+        int left = 0;
+        int right = nums.length-1;
+
+        while (left < right) {
+            int midpoint = left + (right - left) / 2;
+            if(nums[midpoint] > nums[right]){
+                left = midpoint + 1;
+            } else {
+                right = midpoint;
+            }
+        }
+
+        int start = left;
+        left = 0;
+        right = nums.length-1;
+
+        if(target >= nums[start] && target <= nums[right]){
+            left = start;
+        } else {
+            right = start;
+        }
+
+        while (left <= right) {
+            int midpoint = left + (right - left) / 2;
+            if(nums[midpoint]==target){
+                return midpoint;
+            } else if (nums[midpoint]<target){
+                left = midpoint + 1;
+            } else {
+                right = midpoint-1;
+            }
+        }
+
+        return -1;
+        // binarySearch method only works if the array argument is sorted (ascending)
+//        int index = Arrays.binarySearch(nums, target);
+//
+//        return index;
     }
     public static void main(String[] args) {
         System.out.println("-----Contains Duplicate-----");
@@ -633,5 +706,21 @@ public class MustDoLeetcodes {
         String s1 = "adc";
         String s2 = "dcda";
         System.out.println("s1 permutation in s2?: " + checkInclusion(s1, s2));
+
+        System.out.println("-----Valid Parentheses------");
+        String s3 = "()[]{}";
+        System.out.println("valid parentheses? " + isValid(s3));
+
+        System.out.println("----Find minimum int in Rotated Array----");
+        int[] nums1 = {3,4,5,1,2};
+        System.out.println("Find min int: " + findMin(nums1));
+
+        System.out.println("----Return index of specified element-----");
+        int[] nums2 = {4,5,6,7,0,1,2};
+        int target1 = 0;
+
+//        int[] nums2 = {2,4,6,8,10};
+//        int target1 = 6;
+        System.out.println("index of element " + target1 + ": " + search(nums2, target1) );
     }
 }

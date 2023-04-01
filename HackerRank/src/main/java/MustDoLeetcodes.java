@@ -573,12 +573,14 @@ public class MustDoLeetcodes {
         int left = 0;
         int right = nums.length-1;
 
+        // loop while left is less than right
         while (left < right) {
             int midpoint = left + (right - left) / 2;
+            // when element becomes greater than right end element
             if(nums[midpoint] > nums[right]){
-                left = midpoint + 1;
+                left = midpoint + 1; // midpoint becomes the left end
             } else {
-                right = midpoint;
+                right = midpoint; // midpoint becomes the right end
             }
         }
 

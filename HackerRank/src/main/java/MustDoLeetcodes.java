@@ -573,27 +573,34 @@ public class MustDoLeetcodes {
         int left = 0;
         int right = nums.length-1;
 
-        // loop while left is less than right
+        // to find the pivot index (midpoint)
+        // loop til left meets right
         while (left < right) {
             int midpoint = left + (right - left) / 2;
-            // when element becomes greater than right end element
+            // when midpoint element becomes greater than right end element
             if(nums[midpoint] > nums[right]){
                 left = midpoint + 1; // midpoint becomes the left end
             } else {
                 right = midpoint; // midpoint becomes the right end
             }
         }
+        System.out.println("midpoint: " + right);
 
+        // assign the first and last index of the subarray
         int start = left;
         left = 0;
         right = nums.length-1;
 
+        // to determine which array does the target fall under
         if(target >= nums[start] && target <= nums[right]){
+            // target falls on the right subarray (start to nums.length-1)
             left = start;
         } else {
+            // target falls on the left subarray (left to right)
             right = start;
         }
 
+        // loop through the subarray and return the index of the target
         while (left <= right) {
             int midpoint = left + (right - left) / 2;
             if(nums[midpoint]==target){
@@ -606,10 +613,21 @@ public class MustDoLeetcodes {
         }
 
         return -1;
-        // binarySearch method only works if the array argument is sorted (ascending)
-//        int index = Arrays.binarySearch(nums, target);
-//
-//        return index;
+    }
+
+    public static int findPivot(int[] arr){
+        int left = 0;
+        int right = arr.length-1;
+        while(left<right) {
+            int mid = (left+right)/2;
+            if(arr[mid]>arr[right]){
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+//        System.out.println("element in index " + left + ": " + arr[left]);
+        return left;
     }
     public static void main(String[] args) {
         System.out.println("-----Contains Duplicate-----");
@@ -718,11 +736,19 @@ public class MustDoLeetcodes {
         System.out.println("Find min int: " + findMin(nums1));
 
         System.out.println("----Return index of specified element-----");
-        int[] nums2 = {4,5,6,7,0,1,2};
-        int target1 = 0;
+        int[] nums2 = {5,6,7,0,1,2,3,4};
+        int target1 = 1;
 
 //        int[] nums2 = {2,4,6,8,10};
 //        int target1 = 6;
         System.out.println("index of element " + target1 + ": " + search(nums2, target1) );
+
+        System.out.println("----Find pivot----");
+        int pivot = findPivot(nums2);
+        System.out.println("Pivot index: " + pivot);
+        int[] leftArray = Arrays.copyOfRange(nums2, 0, pivot);
+        int[] rightArray = Arrays.copyOfRange(nums2, pivot, nums2.length);
+        System.out.println("Left Array: " + Arrays.toString(leftArray));
+        System.out.println("Right Array: " + Arrays.toString(rightArray));
     }
 }

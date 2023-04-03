@@ -63,6 +63,12 @@ Set<Integer> <var name> =  Arrays.stream(<int[] name>).boxed().collect(Collector
 ```java
 var2 = Math.max(var1, var2); // value in var1 gets assigned to var2
 ```
+```java
+Arrays.binarySearch(<arrName>, element) // binarySearch method returns the index of the specified element from an int[], only works if the array argument is sorted (ascending)
+```
+```java
+Arrays.copyOfRange(<arrName>, startIndex, endIndex) // returns the specified subarray of a given array
+```
 ## Non-primitives - mutable
 ### String
 ```java

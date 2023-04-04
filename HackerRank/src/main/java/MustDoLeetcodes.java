@@ -565,6 +565,18 @@ public class MustDoLeetcodes {
         return nums[0];
     }
 
+    // return index of target element (without runtime complexity)
+    public static int searchEl(int[] nums, int target){
+        int index = -1;
+        for(int i = 0; i < nums.length; i++){
+            if(nums[i] == target){
+                index = i;
+            }
+        }
+        return index;
+    }
+
+    // return index of target element with rotated sorted array consideration, must use 0(log n) runtime complexity
     public static int search(int[] nums, int target){
         // return the index of the element specified by the target
         System.out.println("nums: " + Arrays.toString(nums));
@@ -587,7 +599,7 @@ public class MustDoLeetcodes {
         System.out.println("midpoint: " + right);
 
         // assign the first and last index of the subarray
-        int start = left;
+        int start = right;
         left = 0;
         right = nums.length-1;
 
@@ -741,6 +753,7 @@ public class MustDoLeetcodes {
 
 //        int[] nums2 = {2,4,6,8,10};
 //        int target1 = 6;
+        System.out.println("searchEl index " + target1 + ": " + searchEl(nums2, target1));
         System.out.println("index of element " + target1 + ": " + search(nums2, target1) );
 
         System.out.println("----Find pivot----");

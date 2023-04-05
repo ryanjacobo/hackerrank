@@ -566,7 +566,8 @@ public class MustDoLeetcodes {
     }
 
     // return index of target element (without runtime complexity)
-    public static int searchEl(int[] nums, int target){
+
+    public static int searchElIndex(int[] nums, int target){
         int index = -1;
         for(int i = 0; i < nums.length; i++){
             if(nums[i] == target){
@@ -574,6 +575,26 @@ public class MustDoLeetcodes {
             }
         }
         return index;
+    }
+
+    // Helper function of search method
+    public static int findPivot(int[] arr){
+        // pivot is the first integer that's smaller than it's left integer
+        int left = 0;
+        int right = arr.length-1;
+        int pivot = 0;
+        while(left<right) {
+            int mid = (left+right)/2;
+            if(arr[mid]>arr[right]){
+                left = mid + 1;
+                pivot = left;
+            } else {
+                right = mid;
+                pivot = right;
+            }
+        }
+//        return left;
+        return pivot;
     }
 
     // return index of target element with rotated sorted array consideration, must use 0(log n) runtime complexity
@@ -587,60 +608,51 @@ public class MustDoLeetcodes {
 
         // to find the pivot index (midpoint)
         // loop til left meets right
-        while (left < right) {
-            int midpoint = left + (right - left) / 2;
-            // when midpoint element becomes greater than right end element
-            if(nums[midpoint] > nums[right]){
-                left = midpoint + 1; // midpoint becomes the left end
-            } else {
-                right = midpoint; // midpoint becomes the right end
-            }
-        }
-        System.out.println("midpoint: " + right);
+//        while (left < right) {
+////            int midpoint = left + (right - left) / 2;
+//            int midpoint = (right + left) / 2;
+////             when midpoint element becomes greater than right end element
+//            if(nums[midpoint] > nums[right]){
+//                left = midpoint + 1; // midpoint becomes the left end
+//            } else {
+//                right = midpoint; // midpoint becomes the right end
+//            }
+//        }
+////         assign the first and last index of the subarray
+//        int pivot = right;
+//        left = 0;
+//        right = nums.length-1;
 
-        // assign the first and last index of the subarray
-        int start = right;
-        left = 0;
-        right = nums.length-1;
+        int pivot = findPivot(nums);
+        System.out.println("pivot: " + pivot);
 
-        // to determine which array does the target fall under
-        if(target >= nums[start] && target <= nums[right]){
-            // target falls on the right subarray (start to nums.length-1)
-            left = start;
+        // find the subarray where the target falls under
+        if(target >= nums[pivot] && target <= nums[right]){
+            // if target is >= last element, target falls on the right subarray (pivot to nums.length-1)
+            left = pivot; // left index moves to pivot index
         } else {
-            // target falls on the left subarray (left to right)
-            right = start;
+            // if target =< nums[pivot], target falls on the left subarray (left to pivot)
+            right = pivot;
         }
+        System.out.println("left: " + left + ", right: " + right);
+        System.out.println("nums[right]: " + nums[right]);
+        int[] subArr = Arrays.copyOfRange(nums, left, right);
+        System.out.println("subarray: " + Arrays.toString(subArr));
 
-        // loop through the subarray and return the index of the target
+        // loop through the subarray and return the index of the target, exits when left > right
         while (left <= right) {
-            int midpoint = left + (right - left) / 2;
-            if(nums[midpoint]==target){
-                return midpoint;
-            } else if (nums[midpoint]<target){
-                left = midpoint + 1;
+            int targetIndex = (left + right) / 2;
+            if(nums[targetIndex]==target){
+                return targetIndex;
+            } else if (nums[targetIndex]<target){
+                left = targetIndex + 1;
             } else {
-                right = midpoint-1;
+                right = targetIndex-1;
             }
         }
-
         return -1;
     }
 
-    public static int findPivot(int[] arr){
-        int left = 0;
-        int right = arr.length-1;
-        while(left<right) {
-            int mid = (left+right)/2;
-            if(arr[mid]>arr[right]){
-                left = mid + 1;
-            } else {
-                right = mid;
-            }
-        }
-//        System.out.println("element in index " + left + ": " + arr[left]);
-        return left;
-    }
     public static void main(String[] args) {
         System.out.println("-----Contains Duplicate-----");
         int[] nums = {1,2,3,1};
@@ -747,13 +759,14 @@ public class MustDoLeetcodes {
         int[] nums1 = {3,4,5,1,2};
         System.out.println("Find min int: " + findMin(nums1));
 
-        System.out.println("----Return index of specified element-----");
-        int[] nums2 = {5,6,7,0,1,2,3,4};
-        int target1 = 1;
+        System.out.println("----Return the index of specified element-----");
+        int[] nums2 = {4,5,6,7,0,1,2};
+//        int[] nums2 = {0,1,2,4,5,6,7};
+        int target1 = 2;
 
 //        int[] nums2 = {2,4,6,8,10};
 //        int target1 = 6;
-        System.out.println("searchEl index " + target1 + ": " + searchEl(nums2, target1));
+        System.out.println("searchEl index " + target1 + ": " + searchElIndex(nums2, target1));
         System.out.println("index of element " + target1 + ": " + search(nums2, target1) );
 
         System.out.println("----Find pivot----");

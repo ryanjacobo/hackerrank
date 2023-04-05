@@ -636,7 +636,7 @@ public class MustDoLeetcodes {
         }
         System.out.println("left: " + left + ", right: " + right);
         System.out.println("nums[right]: " + nums[right]);
-        int[] subArr = Arrays.copyOfRange(nums, left, right);
+        int[] subArr = Arrays.copyOfRange(nums, left, right); // copyOfRange never prints the last element of the array 
         System.out.println("subarray: " + Arrays.toString(subArr));
 
         // loop through the subarray and return the index of the target, exits when left > right

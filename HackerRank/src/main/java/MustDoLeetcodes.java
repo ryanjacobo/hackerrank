@@ -583,8 +583,12 @@ public class MustDoLeetcodes {
         int left = 0;
         int right = arr.length-1;
         int pivot = 0;
+
+        // loop til left meets right
         while(left<right) {
             int mid = (left+right)/2;
+
+            //when midpoint element becomes greater than right end element,
             if(arr[mid]>arr[right]){
                 left = mid + 1;
                 pivot = left;
@@ -607,22 +611,6 @@ public class MustDoLeetcodes {
         int right = nums.length-1;
 
         // to find the pivot index (midpoint)
-        // loop til left meets right
-//        while (left < right) {
-////            int midpoint = left + (right - left) / 2;
-//            int midpoint = (right + left) / 2;
-////             when midpoint element becomes greater than right end element
-//            if(nums[midpoint] > nums[right]){
-//                left = midpoint + 1; // midpoint becomes the left end
-//            } else {
-//                right = midpoint; // midpoint becomes the right end
-//            }
-//        }
-////         assign the first and last index of the subarray
-//        int pivot = right;
-//        left = 0;
-//        right = nums.length-1;
-
         int pivot = findPivot(nums);
         System.out.println("pivot: " + pivot);
 
@@ -634,14 +622,14 @@ public class MustDoLeetcodes {
             // if target =< nums[pivot], target falls on the left subarray (left to pivot)
             right = pivot;
         }
-        System.out.println("left: " + left + ", right: " + right);
-        System.out.println("nums[right]: " + nums[right]);
-        int[] subArr = Arrays.copyOfRange(nums, left, right); // copyOfRange never prints the last element of the array 
+        int[] subArr = Arrays.copyOfRange(nums, left, right); // copyOfRange never prints the last element of the array
         System.out.println("subarray: " + Arrays.toString(subArr));
 
         // loop through the subarray and return the index of the target, exits when left > right
         while (left <= right) {
-            int targetIndex = (left + right) / 2;
+            int targetIndex = (left + right) / 2; // divide the array to cut the options in half
+
+            // left++/right-- til target is found
             if(nums[targetIndex]==target){
                 return targetIndex;
             } else if (nums[targetIndex]<target){
@@ -760,8 +748,9 @@ public class MustDoLeetcodes {
         System.out.println("Find min int: " + findMin(nums1));
 
         System.out.println("----Return the index of specified element-----");
-        int[] nums2 = {4,5,6,7,0,1,2};
+//        int[] nums2 = {4,5,6,7,0,1,2};
 //        int[] nums2 = {0,1,2,4,5,6,7};
+        int[] nums2 = {6,8,10,12,0,2,4};
         int target1 = 2;
 
 //        int[] nums2 = {2,4,6,8,10};

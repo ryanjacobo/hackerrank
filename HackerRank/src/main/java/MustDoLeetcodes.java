@@ -641,6 +641,25 @@ public class MustDoLeetcodes {
         return -1;
     }
 
+    // class to create ListNode objects, similar to LinkedList
+    public static class ListNode {
+        int val; // data
+        ListNode next; // reference to next ListNode
+        ListNode(int x) { val = x; } // constructor
+    }
+
+    public static ListNode reverseList(ListNode head){
+        ListNode prev = null;
+
+        while(head != null) {
+            ListNode next = head.next;
+            head.next = prev;
+            prev = head;
+            head = next;
+        }
+        return prev;
+    }
+
     public static void main(String[] args) {
         System.out.println("-----Contains Duplicate-----");
         int[] nums = {1,2,3,1};
@@ -765,5 +784,24 @@ public class MustDoLeetcodes {
         int[] rightArray = Arrays.copyOfRange(nums2, pivot, nums2.length);
         System.out.println("Left Array: " + Arrays.toString(leftArray));
         System.out.println("Right Array: " + Arrays.toString(rightArray));
+
+        System.out.println("----Reverse Linked List (ListNode)----");
+        ListNode nodeA = new ListNode(1);
+        ListNode nodeB = new ListNode(2);
+        ListNode nodeC = new ListNode(3);
+        ListNode nodeD = new ListNode(4);
+        ListNode nodeE = new ListNode(5);
+
+        nodeA.next = nodeB;
+        nodeB.next = nodeC;
+        nodeC.next = nodeD;
+        nodeD.next = nodeE;
+
+        System.out.println("nodes: " + nodeA);
+        System.out.println("Reverse ListNode: " + reverseList(nodeA));
+
+        List<Integer> list = new LinkedList<>(Arrays.asList(1,2,3,4,5));
+        Collections.reverse(list);
+        System.out.println("Reverse list: " + list);
     }
 }

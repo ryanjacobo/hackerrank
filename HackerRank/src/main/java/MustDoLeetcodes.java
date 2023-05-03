@@ -641,23 +641,53 @@ public class MustDoLeetcodes {
         return -1;
     }
 
-    // class to create ListNode objects, similar to LinkedList
+    // class to create ListNode objects (ListNode constructor)
     public static class ListNode {
         int val; // data
         ListNode next; // reference to next ListNode
         ListNode(int x) { val = x; } // constructor
     }
 
+    public static void display(ListNode head) {
+        ListNode current = head;
+        while (current != null) {
+            System.out.print(current.val + " --> ");
+            current = current.next;
+        }
+        System.out.print("null");
+        System.out.println();
+    }
+
     public static ListNode reverseList(ListNode head){
         ListNode prev = null;
 
         while(head != null) {
-            ListNode next = head.next;
-            head.next = prev;
-            prev = head;
-            head = next;
+            ListNode next = head.next; // head.next is assigned to next
+            head.next = prev; // head.next will be null
+            prev = head; // head becomes the prev
+            head = next; // next points to head
         }
         return prev;
+    }
+
+    // leetcode 143
+    public static ListNode reorderList(ListNode head) {
+        if(head == null || head.next == null || head.next.next == null) return head; // speeds up the compilation on leetcode
+
+        ListNode last = head.next; // move the last node to head.next
+        ListNode secondLast = head; // assign secondLast to head
+
+        while(last.next != null){
+            last = last.next;
+            secondLast = secondLast.next;
+        }
+
+        ListNode temp = head.next;
+        head.next = last;
+        last.next = temp;
+        secondLast.next = null;
+
+        return temp;
     }
 
     public static void main(String[] args) {
@@ -786,6 +816,11 @@ public class MustDoLeetcodes {
         System.out.println("Right Array: " + Arrays.toString(rightArray));
 
         System.out.println("----Reverse Linked List (ListNode)----");
+        List<Integer> list = new LinkedList<>(Arrays.asList(1,2,3,4,5));
+        System.out.println("Linked List: " + list);
+        Collections.reverse(list);
+        System.out.println("Reverse list: " + list);
+
         ListNode nodeA = new ListNode(1);
         ListNode nodeB = new ListNode(2);
         ListNode nodeC = new ListNode(3);
@@ -797,11 +832,19 @@ public class MustDoLeetcodes {
         nodeC.next = nodeD;
         nodeD.next = nodeE;
 
-        System.out.println("nodes: " + nodeA);
-        System.out.println("Reverse ListNode: " + reverseList(nodeA));
+        display(nodeA);
+        reverseList(nodeA);
+        display(nodeE);
 
-        List<Integer> list = new LinkedList<>(Arrays.asList(1,2,3,4,5));
-        Collections.reverse(list);
-        System.out.println("Reverse list: " + list);
+        System.out.println("----Reorder List----");
+        System.out.print("Reorder list: ");
+        display(nodeE);
+        reorderList(nodeE);
+        System.out.print("Reordered: ");
+        display(nodeE);
+
+        ListNode nodeF = new ListNode(0);
+        reorderList(nodeF);
+        display(nodeF);
     }
 }

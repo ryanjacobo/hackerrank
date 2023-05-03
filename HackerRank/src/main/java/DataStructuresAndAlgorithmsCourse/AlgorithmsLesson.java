@@ -10,6 +10,7 @@ public class AlgorithmsLesson {
         }
         System.out.println();
     }
+
     // Move 0 elements to the end of the array. To move the 0s to the start of the array, just change the "==" to "!=" and vise versa.
     public static void moveZeros(int[] arr){
 //        System.out.println("arr: " + Arrays.toString(arr));
@@ -27,17 +28,32 @@ public class AlgorithmsLesson {
 //        System.out.println("new arr: " + Arrays.toString(arr));
     }
 
+    // Find one missing number from the array
+    public static int findMissingNum(int[] arr){
+        int n = arr.length + 1;
+        int arrSum = n * (n + 1) / 2;
+        for(int num : arr) {
+            arrSum -= num;
+        }
+        return arrSum;
+    }
+
     public void arrayDemo() {
+        System.out.println("----Move Zeros to end of array----");
         int[] arr = {8, 1, 0, 2, 1, 0, 3};
         printArray(arr);
         moveZeros(arr);
         printArray(arr);
+
+        System.out.println("----Find the missing number----");
+        int[] arr1 = {2,4,1,8,6,3,7};
+        printArray(arr1);
+        System.out.println("Missing number: " + findMissingNum(arr1));
     }
     public static void main(String[] args) {
 //        int[] arr = {8,1,0,2,1,0,3};
 //       moveZeros(arr);
-        System.out.println("----Move Zeros to end of array----");
-       AlgorithmsLesson moveZeros = new AlgorithmsLesson();
-       moveZeros.arrayDemo();
+       AlgorithmsLesson algoMethods = new AlgorithmsLesson();
+       algoMethods.arrayDemo();
     }
 }

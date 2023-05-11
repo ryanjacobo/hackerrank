@@ -1,3 +1,8 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Queue;
+
 public class SinglyLinkedList {
     private ListNode head;
 
@@ -104,21 +109,22 @@ public class SinglyLinkedList {
     }
 
     public void delete(int position) {
-        System.out.println("Delete: " + position);
-        // position is valid and starting from 1
+        System.out.println("Delete node " + position);
+        // if position is valid and starting from 1
         // 3 -> 4 -> 7 -> 8 -> 9 -> null
         if (position == 1) {
             head = head.next; // just move head to head.next to discard the first node of the list
         } else {
             ListNode previous = head;
             int count = 1;
+            // position - 1 is the node that's before the node to be deleted
             while (count < position - 1) {
                 previous = previous.next;
                 count++;
             }
 
             ListNode current = previous.next; // store previous.next (target node) to current
-            previous.next = current.next; // make previous.next the current.next to skip/drop current node
+            previous.next = current.next; // make previous.next the current.next to drop current node
         }
     }
 
@@ -231,6 +237,31 @@ public class SinglyLinkedList {
         return mainPtr;
     }
 
+    public void removeNthfromEnd(int n){
+//        ListNode removeNode = getNthNodeFromEnd(n);
+//        System.out.println("remove node: " + removeNode.data);
+//        return removeNode;
+
+        System.out.println("Remove node " + n + " from last node.");
+        //previous -> 1 -> 2 -> 3 -> 4 -> null, n = 2
+        ListNode refNode = head;
+        int count = 0;
+
+        while(count < n) {
+            refNode = refNode.next;
+            count++;
+        }
+
+        ListNode previous = new ListNode(0);
+        previous.next = head;
+        while(refNode != null){
+                refNode = refNode.next;
+                previous = previous.next;
+            }
+
+            ListNode remove = previous.next;
+            previous.next = remove.next; // make previous.next(->) point to remove.next node
+    }
     public void removeDuplicatesSorted(){
         if(head == null) {
             return;
@@ -299,8 +330,8 @@ public class SinglyLinkedList {
         ListNode slowPtr = head;
 
         // check to make sure fastPtr hasn't reached null, if it does then list has a loop
-//        while (fastPtr != null && fastPtr.next != null) {
-            while (fastPtr.next != null) {
+        while (fastPtr != null && fastPtr.next != null) {
+//            while (fastPtr.next != null) {
             fastPtr = fastPtr.next.next; // fastPtr travels 2x faster than slwPtr
             slowPtr = slowPtr.next;
 
@@ -392,6 +423,7 @@ public class SinglyLinkedList {
         sixth.next = third; // loop starting node is 3
     }
 
+//    merge 2 sorted linked lists
     public static ListNode merge(ListNode a, ListNode b) {
         // a --> 1 --> 3 --> 5 --> null
         // b --> 2 --> 4 --> 6 --> null
@@ -436,6 +468,42 @@ public class SinglyLinkedList {
         return dummy.next; // dummy.next will be the head of the list (not dummy(0))
     }
 
+    // merge k sorted linked lists
+    public static ListNode mergeKLists(ListNode[] lists){
+        // lists = [[1,4,5],[1,3,4],[2,6]]
+        // dummy.next = 1,1,2,3,4,4,5,6
+        //create a heap that will store the starting node of each list in ascending order
+        //move each node to the list by ascending order as well
+
+        Queue<ListNode> minHeap = new PriorityQueue<>((a,b)->a.data-b.data);
+
+        // loop through each list in lists using for-loop
+//        for(ListNode list : lists){
+//            if(list == null) continue;
+//            minHeap.add(list); // add each list to the minHeap
+//        }
+
+        // using while-loop
+        int i = 0;
+        while(i < lists.length){
+            if(lists[i] == null) continue;
+            minHeap.add(lists[i]); // add each list to the minHeap
+            i++;
+        }
+
+        ListNode dummy = new ListNode(0);
+        ListNode cur = dummy;
+
+        while(!minHeap.isEmpty()){
+            ListNode top = minHeap.poll();
+            cur.next = top;
+            cur = cur.next;
+            if(top.next != null){
+                minHeap.add(top.next);
+            }
+        }
+        return dummy.next;
+    }
     // add 2 singly linked list
     public static ListNode addLinkedLists(ListNode a, ListNode b) {
 
@@ -486,13 +554,11 @@ public class SinglyLinkedList {
 //        result.display();
 
         SinglyLinkedList sll = new SinglyLinkedList();
-//        sll.head = new ListNode(10);
         ListNode first = new ListNode(11);
         ListNode second = new ListNode(12);
         ListNode third = new ListNode(13);
         ListNode fourth = new ListNode(14);
 
-        // sll.head.next = second;
         sll.head = first;
         first.next = second;
         second.next = third;
@@ -527,6 +593,7 @@ public class SinglyLinkedList {
         System.out.println("Delete last element: " + sllBlank.deleteLast().data);
         sllBlank.display();
 
+        System.out.println("----Delete specified node----");
         sll.delete(2);
         sll.display();
 
@@ -538,8 +605,13 @@ public class SinglyLinkedList {
         ListNode middleNode = sll.getMiddleNode();
         System.out.println("Middle node is " + middleNode.data);
 
-        int nthNode = 5;
+        System.out.println("----Get nth Node from the end---");
+        int nthNode = 2;
         System.out.println(nthNode + " node from the end is " + sll.getNthNodeFromEnd(nthNode).data);
+//        sll.delete(4);
+        sll.display();
+        sll.removeNthfromEnd(2);
+        sll.display();
 
         System.out.println("----Remove duplicate nodes from a sorted list----");
         sll.insertFirst(5);
@@ -560,9 +632,11 @@ public class SinglyLinkedList {
         sortedSll.insertInSortedList(4);
         sortedSll.display();
 
-        System.out.println("----Delete specified node----");
-        sll.insert(1, 5);
+        System.out.println("----Insert new node in specified position of the list----");
+        sll.insert(2, 2);
         sll.display();
+
+        System.out.println("----Delete specified node----");
         sll.deleteNode(5);
         sll.display();
 //        sll.deleteNode(5);
@@ -589,6 +663,47 @@ public class SinglyLinkedList {
         SinglyLinkedList mergedList = new SinglyLinkedList();
         mergedList.head = merge(sll.head,loopedList.head);
         mergedList.display();
+
+        System.out.println("-----Merge k lists----");
+//        listA = [1,4,5]; listB = [1,3,4]; listC = [2,6]
+        ListNode a1 = new ListNode(1);
+        ListNode a2 = new ListNode(4);
+        ListNode a3 = new ListNode(5);
+        a1.next = a2;
+        a2.next = a3;
+        SinglyLinkedList sllA = new SinglyLinkedList();
+        sllA.head = a1;
+        sllA.display();
+
+        ListNode b1 = new ListNode(1);
+        ListNode b2 = new ListNode(3);
+        ListNode b3 = new ListNode(4);
+        b1.next = b2;
+        b2.next = b3;
+        SinglyLinkedList sllB = new SinglyLinkedList();
+        sllB.head = b1;
+        sllB.display();
+
+        ListNode c1 = new ListNode(2);
+        ListNode c2 = new ListNode(6);
+        c1.next = c2;
+        SinglyLinkedList sllC = new SinglyLinkedList();
+        sllC.head = c1;
+        sllC.display();
+
+        ListNode d1 = new ListNode(5);
+        ListNode d2 = new ListNode(7);
+        ListNode d3 = new ListNode(8);
+        d1.next = d2;
+        d2.next = d3;
+        SinglyLinkedList sllD = new SinglyLinkedList();
+        sllD.head = d1;
+        sllD.display();
+
+        ListNode[] list = {a1, b1, c1, d1};
+        SinglyLinkedList mergedKL = new SinglyLinkedList();
+        mergedKL.head = mergeKLists(list);
+        mergedKL.display();
 
         System.out.println("----Add 2 node list----");
         System.out.print("node list a: ");

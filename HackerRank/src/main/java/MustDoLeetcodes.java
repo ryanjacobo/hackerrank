@@ -690,6 +690,58 @@ public class MustDoLeetcodes {
         return temp;
     }
 
+    // remove nth node from end
+    public static ListNode removeNthFromEnd(ListNode head, int n){
+        display(head);
+        System.out.println("Delete node " + n + " from end of list.");
+
+        // use dummy to make lPointer behind the node to be removed
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+
+        ListNode rPointer = head;
+        int count = 0;
+        while(count != n) {
+            rPointer = rPointer.next; // move the rPointer n nodes away node to be removed
+            count++;
+        }
+
+        ListNode lPointer = dummy;
+        while(rPointer != null) {
+            rPointer = rPointer.next;
+            lPointer = lPointer.next;
+        }
+        // remove the specified node
+        ListNode remove = lPointer.next;
+        lPointer.next = remove.next;
+        return dummy.next;
+    }
+
+    // Merge K lists
+    public static ListNode mergeKLists(ListNode[] lists){
+        Queue<ListNode> minHeap = new PriorityQueue<>((a,b)->a.val-b.val);
+
+        int i = 0;
+        while(i < lists.length){
+            if(lists[i] == null) continue;
+            minHeap.add(lists[i]); // add each list to the minHeap
+            i++;
+        }
+
+        ListNode dummy = new ListNode(0);
+        ListNode cur = dummy;
+
+        while(!minHeap.isEmpty()){
+            ListNode top = minHeap.poll();
+            cur.next = top;
+            cur = cur.next;
+            if(top.next != null){
+                minHeap.add(top.next);
+            }
+        }
+        return dummy.next;
+    }
+
     public static void main(String[] args) {
         System.out.println("-----Contains Duplicate-----");
         int[] nums = {1,2,3,1};
@@ -846,5 +898,30 @@ public class MustDoLeetcodes {
         ListNode nodeF = new ListNode(0);
         reorderList(nodeF);
         display(nodeF);
+
+        System.out.println("----Remove the nth node from the end----");
+        removeNthFromEnd(nodeE, 2);
+        display(nodeE);
+
+        System.out.println("----Merge k lists----");
+        ListNode a1 = new ListNode(1);
+        ListNode a2 = new ListNode(4);
+        ListNode a3 = new ListNode(5);
+        a1.next = a2;
+        a2.next = a3;
+        ListNode b1 = new ListNode(1);
+        ListNode b2 = new ListNode(3);
+        ListNode b3 = new ListNode(4);
+        b1.next = b2;
+        b2.next = b3;
+        ListNode c1 = new ListNode(2);
+        ListNode c2 = new ListNode(6);
+        c1.next = c2;
+        display(a1);
+        display(b1);
+        display(c1);
+        ListNode[] lists = {a1, b1, c1};
+        System.out.print("Merged lists: ");
+        display(mergeKLists(lists));
     }
 }

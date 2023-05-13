@@ -15,6 +15,7 @@ public class CircularSLL {
         return length == 0;
     }
 
+    // done by chatgpt
     public int length() {
         int count = 0;
         if(isEmpty()){
@@ -104,11 +105,12 @@ public class CircularSLL {
     }
 
     public static void main(String[] args) {
+        System.out.println("----createCLL----");
         CircularSLL cll = new CircularSLL();
         cll.createCLL();
         cll.displayCLL();
 
-        System.out.println("----Insert node at start----");
+        System.out.println("----Insert at start----");
         cll.insertStart(2);
         cll.insertStart(3);
         cll.displayCLL();
@@ -122,6 +124,7 @@ public class CircularSLL {
         cll2.displayCLL();
         System.out.println("CLL length: " + cll2.length());
 
+        System.out.println("----Insert at end----");
         cll2.insertEnd(13);
         cll2.displayCLL();
         System.out.println(cll2.length());

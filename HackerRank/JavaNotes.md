@@ -3,7 +3,6 @@
 ```java 
 Math.floor(<doubleName>); // to round double values to lowest int
 ``` 
-
 ```java
 Math.sqrt(<doubleName>); // to get squareroot of an int
 ```

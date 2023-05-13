@@ -1,5 +1,4 @@
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class MustDoLeetcodes {
 
@@ -540,6 +539,7 @@ public class MustDoLeetcodes {
         return result;
     }
 
+    // LeetCode 20 - Using Stack
     public static boolean isValid(String s){
         System.out.println("parentheses: " + s);
 

@@ -539,23 +539,55 @@ public class MustDoLeetcodes {
         return result;
     }
 
-    // LeetCode 20 - Using Stack
+    // LeetCode 20 - valid parenthesis Using Stack
     public static boolean isValid(String s){
-        System.out.println("parentheses: " + s);
+        //        String s3 = "()[]{}";
+        //        String s3 = "()(";
+//        String s3 = "({})[]"; stack: )} = will match the succeding closing parentheses in the string
 
-        Stack<Character> matches = new Stack<>();
-        for(char oneSide : s.toCharArray()){
-            if(oneSide == '(' || oneSide == '{' || oneSide == '['){
-                matches.push(oneSide);
-            } else if (oneSide == ')' && !matches.isEmpty() && matches.peek() == '('){
-                matches.pop();
-            } else if (oneSide == '}' && !matches.isEmpty() && matches.peek() == '{'){
-                matches.pop();
-            } else if (oneSide == ']' && !matches.isEmpty() && matches.peek() == '['){
-                matches.pop();
+        // a valid parentheses would have a MATCHING closing parentheses for every opening parentheses
+        System.out.println("parentheses: " + s);
+//        if(s == ""){
+//            return false;
+//        }
+//        else {
+//            Stack<Character> stack = new Stack<>();
+//            for(char oneSide : s.toCharArray()){
+//                if(oneSide == '(' || oneSide == '{' || oneSide == '['){
+//                    stack.push(oneSide);
+//                }
+//                // objective is to make stack empty
+//                else if (!stack.isEmpty() && oneSide == ')' && stack.peek() == '('){
+//                    stack.pop();
+//                } else if (!stack.isEmpty() && oneSide == '}' && stack.peek() == '{'){
+//                    stack.pop();
+//                } else if (!stack.isEmpty() && oneSide == ']' && stack.peek() == '['){
+//                    stack.pop();
+//                }
+//            }
+//            return stack.isEmpty();
+//        }
+
+        Stack<Character> stack = new Stack<Character>(); // create an empty stack
+        for (char c : s.toCharArray()) { // loop through each character in the string
+            if (c == '(') // if the character is an opening parenthesis
+                stack.push(')'); // push the corresponding closing parenthesis onto the stack
+            else if (c == '{') // if the character is an opening brace
+                stack.push('}'); // push the corresponding closing brace onto the stack
+            else if (c == '[') // if the character is an opening bracket
+            {
+                stack.push(']'); // push the corresponding closing bracket onto the stack
+            }
+            else if (stack.isEmpty() || stack.pop() != c) // if c is a closing bracket i.e. ), }, ]
+            {
+                // stack.isEmpty means c is an odd number parentheses
+                // OR stack.pop() takes out a right side parentheses that's different from c, therefore the previous opening c doesn't match with the current closing c e.g. (}
+                return false;
             }
         }
-        return matches.isEmpty();
+        // if the stack is empty, all opening brackets have been matched with their corresponding closing brackets,
+        // so the string is valid, otherwise, there are unmatched opening brackets, so return false
+        return stack.isEmpty();
     }
 
     public static int findMin(int[] nums) {
@@ -841,7 +873,12 @@ public class MustDoLeetcodes {
         System.out.println("s1 permutation in s2?: " + checkInclusion(s1, s2));
 
         System.out.println("-----Valid Parentheses------");
-        String s3 = "()[]{}";
+//        String s3 = "()[]{}";
+//        String s3 = "()(";
+//        String s3 = "()[]";
+//        String s3 = "({})[]";
+//        String s3 = "({[)]}";
+        String s3 = "({[)}]"; // not balanced
         System.out.println("valid parentheses? " + isValid(s3));
 
         System.out.println("----Find minimum int in Rotated Array----");

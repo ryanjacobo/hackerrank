@@ -68,6 +68,9 @@ Arrays.binarySearch(<arrName>, element) // binarySearch method returns the index
 ```java
 Arrays.copyOfRange(<arrName>, startIndex, endIndex) // returns the specified subarray of a given array
 ```
+```java
+Arrays.toString(String[]) // prints a String[] to the console
+```
 ## Non-primitives - mutable
 ### String
 ```java
@@ -187,6 +190,17 @@ right = Arr[(2+i)+1]
 ```java
 <pqName>.stream().mapToInt(Integer::intValue).toArray(); // convert PriorityQueue to int[]
 ```
+### Binary Tree
+1 2 4 8 = binary sequence
+\
+1(1), 10(2), 11(3), 100(4), 101(5), 110(6), 111(7), 1000(8)
+\
+A
+/ \
+B   C
+/ \   \
+D   E   F
+
 ### Iterator - iterates through a queue
 ```java
 // to initialize an Iterator object

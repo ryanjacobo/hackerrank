@@ -194,13 +194,15 @@ right = Arr[(2+i)+1]
 1 2 4 8 = binary sequence
 \
 1(1), 10(2), 11(3), 100(4), 101(5), 110(6), 111(7), 1000(8)
-\
-A
-/ \
-B   C
-/ \   \
-D   E   F
-
+<pre>
+      1
+     / \
+    2   3
+   / \  / \ 
+  4   5 6  7
+ /
+8
+</pre>
 ### Iterator - iterates through a queue
 ```java
 // to initialize an Iterator object

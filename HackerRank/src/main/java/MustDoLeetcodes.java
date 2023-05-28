@@ -960,5 +960,17 @@ public class MustDoLeetcodes {
         ListNode[] lists = {a1, b1, c1};
         System.out.print("Merged lists: ");
         display(mergeKLists(lists));
+
+        System.out.println("---Invert Binary Tree---");
+        BinaryTree bt = new BinaryTree();
+        bt.createBinaryTree();
+        bt.levelOrderIterative(bt.root);
+        BinaryTree.invertTree(bt.root);
+        System.out.println();
+        bt.levelOrderIterative(bt.root);
+        System.out.println();
+
+        System.out.println("---BT Max Depth---");
+        System.out.println(BinaryTree.maxDepth(bt.root));
     }
 }

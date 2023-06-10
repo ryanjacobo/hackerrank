@@ -198,10 +198,27 @@ right = Arr[(2+i)+1]
       1
      / \
     2   3
-   / \  / \ 
-  4   5 6  7
+   / \ / \ 
+  4  5 6  7
  /
 8
+</pre>
+
+<pre>
+Binary Search Tree
+     8
+   /   \
+  4     9  
+ / \     \
+3   5    11
+   / \   /
+  4   6 10
+     /
+    3
+PreOrder - 8, 4, 3, 5, 4, 6, 3, 9, null, 11, 10
+InOrder - 3, 4, 4, 3, 5, 6, 8, null, 9, 10, 11
+PostOrder - 4, 3, null, 6, 3, 5, 4, 10, null, 11, 9, 8
+LevelOrder - 8, 4, 9, 3, 5, null, 11, null, 4, 6, 10, null, null, null, 3
 </pre>
 ### Iterator - iterates through a queue
 ```java

@@ -35,17 +35,33 @@ public class BinaryTree {
         third.right = seventh;
     }
 
-    public static void createBST(BinaryTree bst){
-        insertBST(bst.root, 8);
-        insertBST(bst.root,4);
-        insertBST(bst.root,9);
-        insertBST(bst.root,3);
-        insertBST(bst.root,5);
-        insertBST(bst.root,11);
-        insertBST(bst.root,4);
-        insertBST(bst.root,6);
-        insertBST(bst.root,10);
-        insertBST(bst.root,3);
+    public void binaryST(){
+        TreeNode first = new TreeNode(8);
+        TreeNode second = new TreeNode(4);
+        TreeNode third = new TreeNode(9);
+        TreeNode fourth = new TreeNode(3);
+        TreeNode fifth = new TreeNode(5);
+        TreeNode sixth = new TreeNode(11);
+        TreeNode seventh = new TreeNode(4);
+        TreeNode eight = new TreeNode(6);
+        TreeNode ninth = new TreeNode(10);
+        TreeNode tenth = new TreeNode(5);
+
+        root = first;
+        root.left = second;
+        root.right = third;
+        second.left = fourth;
+        second.right = fifth;
+        third.left = null;
+        third.right = sixth;
+        fourth.left = null;
+        fourth.right = null;
+        fifth.left = seventh;
+        fifth.right = eight;
+        sixth.left = ninth;
+        seventh.left = null;
+        seventh.right =null;
+        eight.left = tenth;
     }
 
     // Pre-order binary Tree traversal - visit the root node, traverse the left subtree in pre-order fashion, traverse the right subtree in pre-order fashion
@@ -197,18 +213,19 @@ public class BinaryTree {
     }
 
     // Binary Search Tree - Left subtree of the node contains less value than the node and right subtree of the new contains higher value than the node
-    public void addNode(int value){
-        root = insertBST(root, value);
+    public void createBST(int value){
+        root = addNode(root, value);
     }
-    public static TreeNode insertBST(TreeNode root, int value){
+    // createBST helper
+    public TreeNode addNode(TreeNode root, int value){
         if(root == null){
             root = new TreeNode(value);
             return root;
         }
         if(value < root.data) {
-            root.left = insertBST(root.left, value);
+            root.left = addNode(root.left, value);
         } else {
-            root.right = insertBST(root.right, value);
+            root.right = addNode(root.right, value);
         }
         return root;
     }
@@ -385,26 +402,107 @@ public class BinaryTree {
     static HashMap<Integer, Integer> hm = new HashMap<>();
     static int preIndex = 0;
     public static TreeNode buildTree(int[] preorder, int[]inorder){
-        for(int i = 0; i<inorder.length; i++) {
-            hm.put(inorder[i], i);
-        }
-        return build(preorder, inorder, 0, inorder.length-1);
+        // solution 1
+//        for(int i = 0; i<inorder.length; i++) {
+//            hm.put(inorder[i], i);
+//        }
+//        return build(preorder, inorder, 0, inorder.length-1);
+
+        // solution 2
+        return build(preorder, inorder, 0, inorder.length-1, 0);
     }
 
-    public static TreeNode build(int[] preorder, int[] inorder, int start, int end){
-        if(start > end) return null;
+//    public static TreeNode build(int[] preorder, int[] inorder, int start, int end){
+    public static TreeNode build(int[] preOrder, int[] inOrder, int inStart, int inEnd, int preStart){
+        // inOrder: Left, Root, Right
+        // preOrder: Root, Left, Right
 
-        TreeNode root = new TreeNode(preorder[preIndex++]);
+            // solution 1
+//            if(start > end) return null;
+//        TreeNode root = new TreeNode(preorder[preIndex++]);
+//        if(root == null) return null;
+//        if(start == end) return root;
+//        int index = hm.get(root.data);
 
-        if(root == null) return null;
-        if(start == end) return root;
+        // solution 2
 
-        int index = hm.get(root.data);
-        root.left = build(preorder, inorder, start, index-1);
-        root.right = build(preorder, inorder, index + 1, end);
+        if(inStart > inEnd) return null;
+
+        TreeNode root = new TreeNode(preOrder[preStart]); // root of the BT will be the first element of preOrder array
+        int index = 0;
+        for(int i=inStart; i<=inEnd; i++){
+            if(root.data == inOrder[i]){
+                index = i;
+            }
+        }
+        root.left = build(preOrder, inOrder, inStart, index-1, preStart+1);
+        root.right = build(preOrder, inOrder, index + 1, inEnd, preStart + index - inStart + 1);
 
         return root;
-    };
+    }
+
+    // leetcode 124
+    static int max;
+    public static int maxPathSum(TreeNode root) {
+        max = Integer.MIN_VALUE;
+        pathSum(root);
+        return max;
+    }
+    public static int pathSum(TreeNode node){
+        if(node == null) return 0;
+        int left = Math.max(0, pathSum(node.left));
+        int right = Math.max(0, pathSum(node.right));
+        max = Math.max(max, left+right+node.data);
+        return Math.max(left, right) + node.data;
+    }
+
+    // leetcode 297: Serialize and Deserialize Binary Tree
+//    final static String x = "null";
+    // Return a String representation of the Binary Tree
+    public static String serialize(TreeNode root){
+        if(root == null) return "null";
+        String left = serialize(root.left);
+        String right = serialize(root.right);
+        return root.data + ", " + left + ", " + right; // PreOrder traversal
+    }
+
+    // Solution 1
+//    static String[] arr;
+//    static int index = 0;
+
+    public static TreeNode deserialize(String data){
+         // Solution 1
+//    arr = data.split(", ");
+//        return deserializeHelper();
+
+        // Solution 2
+        Queue<String> queue = new LinkedList<>(Arrays.asList(data.split(",")));
+        return deserializeHelper(queue);
+    }
+    // Solution 1
+//    public static TreeNode deserializeHelper(){
+//        if(arr[index].equals("null")){
+//            index++;
+//            return null;
+//        }
+//        TreeNode root = new TreeNode(Integer.parseInt(arr[index++]));
+//        root.left = deserializeHelper();
+//        root.right = deserializeHelper();
+//        return root;
+//    }
+
+    private static TreeNode deserializeHelper(Queue<String> queue){
+        String val = queue.poll();
+        if (val.equals("null")) {
+            return null;
+        }
+
+        TreeNode node = new TreeNode(Integer.parseInt(val));
+        node.left = deserializeHelper(queue);
+        node.right = deserializeHelper(queue);
+
+        return node;
+    }
     public static void main(String[] args) {
         BinaryTree bt = new BinaryTree();
         System.out.println("---preOrder traversal---");
@@ -433,10 +531,22 @@ public class BinaryTree {
         postOrderIterative(bt.root);
         System.out.println();
 
+        System.out.println("---Binary Search Tree---");
         BinaryTree bst = new BinaryTree();
-        createBST(bst);
-        System.out.print("Recursive(BST): ");
+        bst.binaryST();
+//        bst.createBST(8);
+//        bst.createBST(4);
+//        bst.createBST(9);
+//        bst.createBST(3);
+//        bst.createBST(5);
+
+        System.out.print("BST (PO): ");
         postOrderRecursive(bst.root);
+        System.out.println();
+        System.out.print("BST (LO): ");
+        levelOrderRecursive(bst.root);
+        System.out.print("BST (IO): ");
+        inOrderRec(bst.root);
         System.out.println();
         System.out.print("Is valid BST?: ");
         isValid(bst.root);
@@ -453,43 +563,46 @@ public class BinaryTree {
         System.out.println(findMax(bt.root));
 
         System.out.println("---Binary Search Tree---");
-        BinaryTree bt2 = new BinaryTree();
-        bt2.addNode(5);
-        bt2.addNode(3);
-        bt2.addNode(7);
+        BinaryTree bst2 = new BinaryTree();
+        bst2.createBST(5);
+        bst2.createBST(3);
+        bst2.createBST(7);
         System.out.print("Level order: ");
-        levelOrderIterative(bt2.root);
+        levelOrderIterative(bst2.root);
         System.out.println();
         System.out.print("Is valid BST: ");
-        isValid(bt2.root);
+        isValid(bst2.root);
         System.out.print("In order: ");
-        inOrderRec(bt2.root);
-        insertBST(bt2.root, 2);
-        insertBST(bt2.root, 4);
-        insertBST(bt2.root, 6);
+        inOrderRec(bst2.root);
+//        addNode(bst2.root, 2);
+        bst2.createBST(2);
+//        addNode(bst2.root, 4);
+        bst2.createBST(4);
+//        addNode(bst2.root, 6);
+        bst2.createBST(6);
         System.out.println();
         System.out.print("BST Level order: ");
-        levelOrderRecursive(bt2.root);
+        levelOrderRecursive(bst2.root);
         System.out.print("Is valid BST?: ");
-        isValid(bt2.root);
+        isValid(bst2.root);
 
         System.out.println("---TreeNode search---");
-        levelOrderRecursive(bt2.root);
+        levelOrderRecursive(bst2.root);
         int node = 6;
-        treeNodeFound(bt2.root, node);
-        treeNodeFound(bt2.root, 7);
-        treeNodeFound(bt2.root, 1);
+        treeNodeFound(bst2.root, node);
+        treeNodeFound(bst2.root, 7);
+        treeNodeFound(bst2.root, 1);
 
         System.out.println("---Is BST valid---");
         BinaryTree bt3 = new BinaryTree();
-        bt3.addNode(6);
-        bt3.addNode(4);
-        bt3.addNode(8);
-        bt3.addNode(2);
-        bt3.addNode(5);
-        bt3.addNode(7);
-        bt3.addNode(9);
-        bt3.addNode(1);
+        bt3.createBST(6);
+        bt3.createBST(4);
+        bt3.createBST(8);
+        bt3.createBST(2);
+        bt3.createBST(5);
+        bt3.createBST(7);
+        bt3.createBST(9);
+        bt3.createBST(1);
 
         levelOrderRecursive(bt3.root);
         System.out.print("Is BST valid: ");
@@ -508,17 +621,17 @@ public class BinaryTree {
 
         System.out.println("---Leetcode 100: Is Same Tree?---");
         BinaryTree p = new BinaryTree();
-        p.addNode(1);
-        p.addNode(2);
-        p.addNode(3);
+        p.createBST(1);
+        p.createBST(2);
+        p.createBST(3);
         BinaryTree q = new BinaryTree();
-        q.addNode(1);
-        q.addNode(2);
-        q.addNode(3);
+        q.createBST(1);
+        q.createBST(2);
+        q.createBST(3);
         System.out.println(isSameTree(p.root, q.root));
 
         System.out.println("---Leetcode 572: Is subtree of another binary tree?---");
-        System.out.println(isSubtree(bt.root, bt2.root));
+        System.out.println(isSubtree(bt.root, bst2.root));
         System.out.println(isSubtree(p.root, q.root));
 
         System.out.println("---Leetcode 235: Lowest Common Ancestor---");
@@ -527,9 +640,9 @@ public class BinaryTree {
         System.out.print("Is valid BST: ");
         isValid(bt3.root);
         BinaryTree p2 = new BinaryTree();
-        p2.addNode(1);
+        p2.createBST(1);
         BinaryTree q2 = new BinaryTree();
-        q2.addNode(2);
+        q2.createBST(2);
         System.out.println(lowestCommonAncestor(bt3.root, p2.root, q2.root).data);
 
         System.out.println("---Leetcode 102: Return Level order traversal---");
@@ -557,9 +670,24 @@ public class BinaryTree {
         System.out.println(kthSmallest(bt.root, 1));
 
         System.out.println("---construct BT from preorder and inorder traversal---");
-        int[] preorder = {3,9,20,15,7};
-        int[] inorder = {9,3,15,20,7};
+        int[] preorder = {3,9,20,15,7,6};
+        int[] inorder = {9,3,15,20,6,7};
         TreeNode bt4 = buildTree(preorder, inorder);
         levelOrderRecursive(bt4);
+
+        System.out.println("---Leetcode 124: Get the max subtree path sum---");
+        BinaryTree mPS = new BinaryTree();
+        mPS.createBST(-10);
+        mPS.createBST(9);
+        mPS.createBST(20);
+//        mPS.createBST(15);
+//        mPS.createBST(7);
+        System.out.print("Max path sum: ");
+        System.out.println(maxPathSum(mPS.root));
+
+        System.out.println("---Leetcode 297: Serialize and deserialize a binary tree---");
+        String dSerial = "1,2,3,null,null,4,5";
+        System.out.println(serialize(mPS.root));
+        System.out.println(serialize(bst.root));
     }
 }

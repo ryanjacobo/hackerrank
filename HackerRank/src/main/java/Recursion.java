@@ -133,7 +133,8 @@ public class Recursion {
 //            i++;
         }
 
-        // add the rest of the values from the right sub-array into the result
+        // add the rest of the values from the right
+        // sub-array into the result
         while (j<= end){
             temp[k] = data[j];
             k++;

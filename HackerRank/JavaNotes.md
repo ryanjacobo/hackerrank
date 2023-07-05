@@ -190,6 +190,35 @@ right = Arr[(2+i)+1]
 ```java
 <pqName>.stream().mapToInt(Integer::intValue).toArray(); // convert PriorityQueue to int[]
 ```
+### Binary Heap
+```java
+The binary heap is a data structure that helps us in implementing Priority Queue operations efficiently. A binary heap is a complete binary tree in which each node value is >= (or <=) than the values of its children.
+```
+#### Max Heap
+```aidl
+    0
+   /  \
+  7    3
+ / \  / \
+9   8 5  6
+```
+### Min Heap
+```aidl
+    9
+   /  \
+  3    6
+ / \  / \
+2  1  5  4
+```
+### How to find the Children of the Binary Heap Indeces
+```aidl
+Index 0 is empty
+Children of kth index = right child: 2*k, left child: 2*k + 1
+```
+### How to find the Parent of Binary Heap kth index
+```aidl
+Parent of kth index = k/2
+```
 ### Binary Tree
 1 2 4 8 = binary sequence
 \
@@ -223,6 +252,7 @@ PostOrder - Left, Right, Top
 3, 4, 5, 6, 5, 4, 10, 11, 9, 8
 LevelOrder - 8, 4, 9, 3, 5, null, 11, null, 4, 6, 10, null, null, null, 3
 </pre>
+
 ### Iterator - iterates through a queue
 ```java
 // to initialize an Iterator object
